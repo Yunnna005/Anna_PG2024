@@ -1,2 +1,2 @@
 16/01/24 Added player and basic movements.
-18/01/24 Added CameraController Script. Created rotation for cameras and should be fixed for player. Added Jump and 2 cameras.
+18/01/24 Added CameraController Script and MouseController Script. Created rotation for cameras and should be fixed for player. Added Jump and 2 cameras.
