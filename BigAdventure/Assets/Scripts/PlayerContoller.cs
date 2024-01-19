@@ -13,12 +13,15 @@ public class PlayerContoller : MonoBehaviour
     private float _gravityModifier = 1.2f;
 
     Rigidbody playerRigitbody;
+    Animator animator;
     // Start is called before the first frame update
     void Start()
     {
         playerRigitbody = GetComponent<Rigidbody>();
 
         Physics.gravity *= _gravityModifier;
+
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -27,6 +30,10 @@ public class PlayerContoller : MonoBehaviour
         //Move Back or Forward
         backForwardMove = Input.GetAxis("Vertical");
         transform.Translate(Vector3.forward * _speed * Time.deltaTime * backForwardMove);
+        //if(backForwardMove > 0 )
+        //{
+        //    animator.GetCurrentAnimatorStateInfo(0).IsName("RunBackForward");
+        //}
 
         //Move left or right
         leftRightMove = Input.GetAxis("Horizontal");
@@ -46,4 +53,5 @@ public class PlayerContoller : MonoBehaviour
             _isOnGround = true;
         }
     }
+
 }

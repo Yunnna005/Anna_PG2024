@@ -10,9 +10,6 @@ public class CameraConroller : MonoBehaviour
     public Camera camera_view1;
     public Camera camera_view3;
 
-    //private Vector3 _offset_camera_view1 = new Vector3(0, 1.053f, 0.053f);
-    //private Vector3 _offset_camera_view3 = new Vector3(-0.057f, 1.994f, -2.178f);
-
     private Vector3 _orbit_camera_view1;
     private Vector3 _orbit_camera_view3;
     private float _turnSpeed = 2.0f;
@@ -22,7 +19,7 @@ public class CameraConroller : MonoBehaviour
         camera_view1.enabled = false;
 
         _orbit_camera_view1 = new Vector3(player.transform.position.x, player.transform.position.y + 1.053f, player.transform.position.z + 0.2f);
-        _orbit_camera_view3 = new Vector3(player.transform.position.x, player.transform.position.y + 3.0f, player.transform.position.z - 3.5f);
+        _orbit_camera_view3 = new Vector3(player.transform.position.x, player.transform.position.y + 2.3f, player.transform.position.z - 2.8f);
     }
 
     // Update is called once per frame
@@ -57,8 +54,8 @@ public class CameraConroller : MonoBehaviour
         _orbit_camera_view1 = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * _turnSpeed, Vector3.up) * _orbit_camera_view1;
 
         camera_view1.transform.position = player.transform.position  + _orbit_camera_view1;
-        //camera_view1.transform.LookAt(player.transform.position);
+
         camera_view3.transform.position = player.transform.position  + _orbit_camera_view3;
-        camera_view3.transform.LookAt(player.transform.position);
+
     }
 }
