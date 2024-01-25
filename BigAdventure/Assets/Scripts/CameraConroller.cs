@@ -38,7 +38,7 @@ public class CameraConroller : MonoBehaviour
             SwitchToCamera3();
         }
 
-        UpdateCameraPOsition();
+        UpdateCameraPosition();
     }
 
     void SwitchToCamera1()
@@ -53,14 +53,12 @@ public class CameraConroller : MonoBehaviour
         camera_view3.enabled = true;
     }
 
-    void UpdateCameraPOsition()
+    void UpdateCameraPosition()
     {
         _orbit_camera_view3 = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * _turnSpeed, Vector3.up) * _orbit_camera_view3;
         _orbit_camera_view1 = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * _turnSpeed, Vector3.up) * _orbit_camera_view1;
 
         camera_view1.transform.position = player.transform.position  + _orbit_camera_view1;
-
         camera_view3.transform.position = player.transform.position  + _orbit_camera_view3;
-
     }
 }
