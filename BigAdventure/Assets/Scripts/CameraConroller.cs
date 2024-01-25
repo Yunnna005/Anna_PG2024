@@ -13,13 +13,18 @@ public class CameraConroller : MonoBehaviour
     private Vector3 _orbit_camera_view1;
     private Vector3 _orbit_camera_view3;
     private float _turnSpeed = 2.0f;
+
+    private float view1_Y = 1.053f;
+    private float view1_Z = 0.217f;
+    private float view3_Y = 2.3f;
+    private float view3_Z = -2.8f;
     // Start is called before the first frame update
     void Start()
     {
         camera_view1.enabled = false;
 
-        _orbit_camera_view1 = new Vector3(player.transform.position.x, player.transform.position.y + 1.053f, player.transform.position.z + 0.2f);
-        _orbit_camera_view3 = new Vector3(player.transform.position.x, player.transform.position.y + 2.3f, player.transform.position.z - 2.8f);
+        _orbit_camera_view1 = new Vector3(player.transform.position.x, player.transform.position.y + view1_Y, player.transform.position.z + view1_Z);
+        _orbit_camera_view3 = new Vector3(player.transform.position.x, player.transform.position.y + view3_Y, player.transform.position.z + view3_Z);
     }
 
     // Update is called once per frame

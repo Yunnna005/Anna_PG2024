@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -14,6 +15,8 @@ public class PlayerContoller : MonoBehaviour
 
     Rigidbody playerRigitbody;
     Animator animator;
+
+    public GameObject swordPrefab;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +26,6 @@ public class PlayerContoller : MonoBehaviour
 
         animator = GetComponent<Animator>();
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -46,15 +48,18 @@ public class PlayerContoller : MonoBehaviour
             animator.SetBool("isJumping", true);
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        animator.SetBool("isAttacking", Input.GetKeyDown(KeyCode.Mouse0));
+
+        if (Input.GetKey(KeyCode.Mouse1))
         {
-            animator.SetBool("isAttacking", true);
+            animator.SetBool("isPickUp", true);
+            StartCoroutine(DisableObjectWithDelay());
         }
         else
         {
-            animator.SetBool("isAttacking", false);
+            animator.SetBool("isPickUp", false);
+            StartCoroutine(EnableObjectWithDelay());
         }
-
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -64,6 +69,18 @@ public class PlayerContoller : MonoBehaviour
             _isOnGround = true;
             animator.SetBool("isJumping", false);
         }
+    }
+
+    IEnumerator DisableObjectWithDelay()
+    {
+        yield return new WaitForSeconds(0.05f); 
+        swordPrefab.SetActive(false);
+    }
+
+    IEnumerator EnableObjectWithDelay()
+    {
+        yield return new WaitForSeconds(0.05f); 
+        swordPrefab.SetActive(true);
     }
 
 }

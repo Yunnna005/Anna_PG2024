@@ -2,3 +2,4 @@
 18/01/24 Added CameraController Script and MouseController Script. Created rotation for cameras and should be fixed for player. Added Jump and 2 cameras.
 19/01/24 Start working on the Player Animation.
 23/01/24 Animation (Run, Jump, Idle)
+25/01/24 Animation (Attack, PickUp)
