@@ -8,8 +8,8 @@ TagManager:
   - Camera_view3
   - Camera_view1
   - Sword
-  - Mushroom_orange
   - Tree
+  - PickUpItem
   layers:
   - Default
   - TransparentFX
