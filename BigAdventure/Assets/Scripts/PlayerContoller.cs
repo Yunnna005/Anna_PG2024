@@ -17,6 +17,9 @@ public class PlayerContoller : MonoBehaviour
     Animator animator;
 
     public GameObject swordPrefab;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
