@@ -11,6 +11,8 @@ TagManager:
   - Tree
   - Diamond
   - Heart
+  - HealthBar
+  - Mushroom
   layers:
   - Default
   - TransparentFX
