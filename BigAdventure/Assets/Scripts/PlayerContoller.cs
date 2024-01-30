@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http.Headers;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerContoller : MonoBehaviour
 {
@@ -18,6 +19,17 @@ public class PlayerContoller : MonoBehaviour
 
     public GameObject swordPrefab;
 
+    private int _diamonds = 0;
+    private int _health = 0;
+    public Text diamondText;
+    public Text healthText;
+    public GameObject panelGameOver;
+
+    float pickUpTimer;
+    float PickUPAnimationTime = 1.50f;
+
+    public Scrollbar healthBar;
+    float playerHealth = 1.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,11 +38,28 @@ public class PlayerContoller : MonoBehaviour
         Physics.gravity *= _gravityModifier;
 
         animator = GetComponent<Animator>();
+
+        healthBar.size = playerHealth;
+
+        panelGameOver.SetActive(false);
     }
     // Update is called once per frame
     void Update()
     {
         PlayerMovements();
+        pickUpTimer -= Time.deltaTime;
+        if (pickUpTimer <= 0)
+        {
+            animator.SetBool("isPickUp", false);
+            //EnableObjectWithDelay();
+        }
+
+        if (playerHealth == 0)
+        {
+            gameObject.SetActive(false);
+            print("GameOver");
+            panelGameOver.SetActive(true);
+        }
     }
 
     private void PlayerMovements()
@@ -56,16 +85,6 @@ public class PlayerContoller : MonoBehaviour
 
         animator.SetBool("isAttacking", Input.GetKeyDown(KeyCode.Mouse0));
 
-        if (Input.GetKey(KeyCode.Mouse1))
-        {
-            animator.SetBool("isPickUp", true);
-            StartCoroutine(DisableObjectWithDelay());
-        }
-        else
-        {
-            animator.SetBool("isPickUp", false);
-            StartCoroutine(EnableObjectWithDelay());
-        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -77,15 +96,57 @@ public class PlayerContoller : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Diamond"))
+        {  
+            startPickUP();
+            Destroy(other.gameObject);
+            _diamonds++;
+            diamondText.text = "Diamonds: " + _diamonds;
+            print("Diamonds: " + _diamonds);
+        }
+
+        if (other.gameObject.CompareTag("Heart"))
+        {
+            Destroy(other.gameObject);
+            _health++;
+            healthText.text = "Health: " + _health;
+            startPickUP();
+            if(playerHealth < 1.0f)
+            {
+                playerHealth += 0.05f;
+                playerHealth = Mathf.Clamp01(playerHealth);
+                healthBar.size = playerHealth;
+            }
+        }
+
+        if (other.gameObject.CompareTag("Mushroom"))
+        {
+            Destroy(other.gameObject) ;
+            playerHealth -= 0.1f;
+            playerHealth = Mathf.Clamp01(playerHealth);
+            healthBar.size = playerHealth;
+        }
+    }
+
+    void startPickUP()
+    {
+        animator.SetBool("isPickUp", true);
+        pickUpTimer = PickUPAnimationTime;
+        //DisableObjectWithDelay();
+
+    }
+
     IEnumerator DisableObjectWithDelay()
     {
-        yield return new WaitForSeconds(0.05f); 
+        yield return new WaitForSeconds(0.01f); 
         swordPrefab.SetActive(false);
     }
 
     IEnumerator EnableObjectWithDelay()
     {
-        yield return new WaitForSeconds(0.05f); 
+        yield return new WaitForSeconds(0.01f); 
         swordPrefab.SetActive(true);
     }
 
