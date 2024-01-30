@@ -9,7 +9,8 @@ TagManager:
   - Camera_view1
   - Sword
   - Tree
-  - PickUpItem
+  - Diamond
+  - Heart
   layers:
   - Default
   - TransparentFX
