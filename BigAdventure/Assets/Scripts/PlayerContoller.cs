@@ -18,8 +18,6 @@ public class PlayerContoller : MonoBehaviour
 
     public GameObject swordPrefab;
 
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +29,11 @@ public class PlayerContoller : MonoBehaviour
     }
     // Update is called once per frame
     void Update()
+    {
+        PlayerMovements();
+    }
+
+    private void PlayerMovements()
     {
         //Move Back or Forward
         backForwardMove = Input.GetAxis("Vertical");

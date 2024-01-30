@@ -4,3 +4,4 @@
 23/01/24 Animation (Run, Jump, Idle)
 25/01/24 Animation (Attack, PickUp), Added Assect Nature Pack
 26/01/24 Start working with Pickable Items
+30/01/24 Start working on collected items(Diamonds, hearts). Created script ItemCollector.
