@@ -20,16 +20,46 @@ public class PlayerContoller : MonoBehaviour
     public GameObject swordPrefab;
 
     private int _diamonds = 0;
-    private int _health = 0;
     public Text diamondText;
-    public Text healthText;
     public GameObject panelGameOver;
 
     float pickUpTimer;
     float PickUPAnimationTime = 1.50f;
 
     public Scrollbar healthBar;
+    Text healthPercentage;
     float playerHealth = 1.0f;
+
+    public Scrollbar levelBar;
+    float playerLevel = 0f;
+    Text levelPercentage;
+
+    float currentMaxLevel;
+
+    float PlayerHealth {  get { return playerHealth; }
+        set
+        {
+            playerHealth = value;
+            playerHealth = Mathf.Clamp01(playerHealth);
+            healthBar.size = playerHealth;
+            int percentage = (int) (playerHealth * 100);
+            healthPercentage.text = percentage.ToString() + "/100";
+
+        }
+
+    }
+
+    float PlayerLevel {  get { return playerLevel; } 
+        set
+        {
+            playerLevel = value;
+            playerLevel = Mathf.Clamp01(playerLevel);
+            levelBar.size = playerLevel;
+            int percentage = (int)(playerLevel * 100);
+            levelPercentage.text = percentage.ToString() + "/"+ PlayerLevelSetandCheck(percentage);
+        } 
+    }
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +70,11 @@ public class PlayerContoller : MonoBehaviour
         animator = GetComponent<Animator>();
 
         healthBar.size = playerHealth;
+        healthPercentage = healthBar.GetComponentInChildren<Text>();
+
+        levelBar.size = 0;
+        levelPercentage = levelBar.GetComponentInChildren<Text>();
+        levelPercentage.text = "0/100";
 
         panelGameOver.SetActive(false);
     }
@@ -105,28 +140,28 @@ public class PlayerContoller : MonoBehaviour
             _diamonds++;
             diamondText.text = "Diamonds: " + _diamonds;
             print("Diamonds: " + _diamonds);
+            if (playerLevel<1.0f)
+            {
+                PlayerLevel += 0.1f; 
+            }
         }
 
         if (other.gameObject.CompareTag("Heart"))
         {
             Destroy(other.gameObject);
-            _health++;
-            healthText.text = "Health: " + _health;
             startPickUP();
             if(playerHealth < 1.0f)
             {
-                playerHealth += 0.05f;
-                playerHealth = Mathf.Clamp01(playerHealth);
-                healthBar.size = playerHealth;
+                PlayerHealth += 0.05f;
+
             }
         }
 
         if (other.gameObject.CompareTag("Mushroom"))
         {
             Destroy(other.gameObject) ;
-            playerHealth -= 0.1f;
-            playerHealth = Mathf.Clamp01(playerHealth);
-            healthBar.size = playerHealth;
+            PlayerHealth -= 0.1f;
+
         }
     }
 
@@ -150,4 +185,26 @@ public class PlayerContoller : MonoBehaviour
         swordPrefab.SetActive(true);
     }
 
+
+    public float PlayerLevelSetandCheck(int playerLevel)
+    {
+        if (playerLevel < 100)
+        {
+            currentMaxLevel = 100;
+        }
+        else if(playerLevel== 100)
+        {
+            currentMaxLevel = 250;
+        }
+        else if (playerLevel == 250)
+        {
+            currentMaxLevel = 400;
+        }else if(playerLevel == 400)
+        {
+            currentMaxLevel = 600;
+        }
+
+
+        return currentMaxLevel;
+    }
 }
