@@ -1,13 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
-public class Inventory 
+public class Inventory : MonoBehaviour
 {
-    int NumberOfSlots;
+
+    public static Inventory Instance;
+    int NumberOfSlots = 6;
     List<Item> inventorySlots;
 
-public Inventory(int numberOfSlots)
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+    public Inventory(int numberOfSlots)
     {
         NumberOfSlots = numberOfSlots;
         inventorySlots = new List<Item>();
@@ -20,8 +28,14 @@ public Inventory(int numberOfSlots)
         if (inventorySlots.Count < NumberOfSlots) {
             inventorySlots.Add(item);
             return true;
-
+           
         }
         else { return false; }
+
+    }
+
+    public void RemoveItem(Item item) 
+    {
+        inventorySlots.Remove(item);
     }
 }

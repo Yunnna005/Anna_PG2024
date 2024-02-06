@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,11 +31,16 @@ public class PlayerContoller : MonoBehaviour
     Text healthPercentage;
     float playerHealth = 1.0f;
 
+    int playerExpreienceLevel = 0;
     public Scrollbar levelBar;
-    float playerLevel = 0f;
+    int levelProgress = 0;
+    int levelTarget = 100;
     Text levelPercentage;
+    float levelBarSize = 0f;
 
     float currentMaxLevel;
+
+    public Item Item;
 
     float PlayerHealth {  get { return playerHealth; }
         set
@@ -49,14 +55,22 @@ public class PlayerContoller : MonoBehaviour
 
     }
 
-    float PlayerLevel {  get { return playerLevel; } 
+    int PlayerProgress {  get { return levelProgress; } 
         set
         {
-            playerLevel = value;
-            playerLevel = Mathf.Clamp01(playerLevel);
-            levelBar.size = playerLevel;
-            int percentage = (int)(playerLevel * 100);
-            levelPercentage.text = percentage.ToString() + "/"+ PlayerLevelSetandCheck(percentage);
+            levelProgress = value;
+            if (levelProgress >= levelTarget)
+            {
+                playerExpreienceLevel++;
+                levelProgress -= levelTarget;
+                levelTarget = PlayerLevelSetandCheck(playerExpreienceLevel);
+                
+            }
+
+            levelBarSize =  (float)levelProgress/levelTarget;
+            levelBar.size = levelBarSize;
+
+            levelPercentage.text = levelProgress + "/" + levelTarget;
         } 
     }
     
@@ -72,7 +86,7 @@ public class PlayerContoller : MonoBehaviour
         healthBar.size = playerHealth;
         healthPercentage = healthBar.GetComponentInChildren<Text>();
 
-        levelBar.size = 0;
+        levelBar.size = levelBarSize;
         levelPercentage = levelBar.GetComponentInChildren<Text>();
         levelPercentage.text = "0/100";
 
@@ -140,10 +154,9 @@ public class PlayerContoller : MonoBehaviour
             _diamonds++;
             diamondText.text = "Diamonds: " + _diamonds;
             print("Diamonds: " + _diamonds);
-            if (playerLevel<1.0f)
-            {
-                PlayerLevel += 0.1f; 
-            }
+         
+            PlayerProgress += 10;
+
         }
 
         if (other.gameObject.CompareTag("Heart"))
@@ -186,25 +199,27 @@ public class PlayerContoller : MonoBehaviour
     }
 
 
-    public float PlayerLevelSetandCheck(int playerLevel)
+    public int PlayerLevelSetandCheck(int experienceLevel)
     {
-        if (playerLevel < 100)
-        {
-            currentMaxLevel = 100;
-        }
-        else if(playerLevel== 100)
-        {
-            currentMaxLevel = 250;
-        }
-        else if (playerLevel == 250)
-        {
-            currentMaxLevel = 400;
-        }else if(playerLevel == 400)
-        {
-            currentMaxLevel = 600;
-        }
 
-
-        return currentMaxLevel;
+        switch(experienceLevel)
+        {
+            case 0:
+                return 100;
+              
+            case 1:
+                return 250;
+               
+            case 2:
+                return 400;
+                
+                case 3:
+                return 600;
+              
+;
+        default:
+                return 1000;
+        }
+  
     }
 }

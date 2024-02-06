@@ -2,8 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item 
+[CreateAssetMenu]
+public class Item : ScriptableObject
 {
-    internal string name;
-    internal string description;
+    public int id;
+    public string Item_name;
+    public string description;
+    public int value;
+    public Sprite icon;
 }
