@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64055065dbc0f1d4ba306f0ffadfdcb2, type: 3}
   m_Name: Diamond
   m_EditorClassIdentifier: 
-  id: 0
-  Item_name: 
-  description: 
-  value: 0
-  icon: {fileID: 0}
+  id: 1
+  Item_name: Diamond
+  description: The item can be exchanged
+  value: 10
+  icon: {fileID: 21300000, guid: e7d29a79bc7fae248887c8a08a160303, type: 3}
