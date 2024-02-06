@@ -6,3 +6,4 @@
 26/01/24 Start working with Pickable Items
 30/01/24 Start working on collected items(Diamonds, hearts). Created script RotateItem. Added code to Player Animation+Collect Item; Diamond; Hearts; Mushroom; ScrolBar, PlayerHealth. 
 02/02/24 HealthBar is done. Start working on LevelBar and Inventory.
+06/02/24 LevelBar is done. Start working on Inventory system.
