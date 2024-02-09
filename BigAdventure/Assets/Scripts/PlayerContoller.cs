@@ -21,7 +21,6 @@ public class PlayerContoller : MonoBehaviour
     public GameObject swordPrefab;
 
     private int _diamonds = 0;
-    public Text diamondText;
     public GameObject panelGameOver;
 
     float pickUpTimer;
@@ -152,7 +151,6 @@ public class PlayerContoller : MonoBehaviour
             startPickUP();
             Destroy(other.gameObject);
             _diamonds++;
-            diamondText.text = "Diamonds: " + _diamonds;
             print("Diamonds: " + _diamonds);
          
             PlayerProgress += 10;

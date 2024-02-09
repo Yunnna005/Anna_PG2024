@@ -7,3 +7,4 @@
 30/01/24 Start working on collected items(Diamonds, hearts). Created script RotateItem. Added code to Player Animation+Collect Item; Diamond; Hearts; Mushroom; ScrolBar, PlayerHealth. 
 02/02/24 HealthBar is done. Start working on LevelBar and Inventory.
 06/02/24 LevelBar is done. Start working on Inventory system.
+09/02/24 Keep working on Inventory system. Problem with updating the inventory by default.
