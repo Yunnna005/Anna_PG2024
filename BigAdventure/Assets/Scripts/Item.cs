@@ -10,7 +10,4 @@ public class Item : ScriptableObject
     public string description;
     public int value;
     public Sprite icon;
-
-    //public int itemQty = 0;
-
 }
