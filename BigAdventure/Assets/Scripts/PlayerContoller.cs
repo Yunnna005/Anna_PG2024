@@ -39,7 +39,7 @@ public class PlayerContoller : MonoBehaviour
 
     float currentMaxLevel;
 
-    public Item Item;
+    private Inventory inventory;
 
     float PlayerHealth {  get { return playerHealth; }
         set
@@ -72,7 +72,9 @@ public class PlayerContoller : MonoBehaviour
             levelPercentage.text = levelProgress + "/" + levelTarget;
         } 
     }
-    
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -90,6 +92,8 @@ public class PlayerContoller : MonoBehaviour
         levelPercentage.text = "0/100";
 
         panelGameOver.SetActive(false);
+
+        inventory = gameObject.AddComponent<Inventory>();
     }
     // Update is called once per frame
     void Update()
@@ -146,34 +150,45 @@ public class PlayerContoller : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Diamond"))
-        {  
-            startPickUP();
+        if (other.CompareTag("ItemToCollect"))
+        {
+            ItemController itemController = other.GetComponent<ItemController>();
+            Item pickupItem = itemController.Item;
+
+            inventory.AddItem(pickupItem);
+
             Destroy(other.gameObject);
-            _diamonds++;
-            print("Diamonds: " + _diamonds);
+        }
+
+
+        //if (other.gameObject.CompareTag("Diamond"))
+        //{  
+        //    startPickUP();
+        //    Destroy(other.gameObject);
+        //    _diamonds++;
+        //    print("Diamonds: " + _diamonds);
          
-            PlayerProgress += 10;
+        //    PlayerProgress += 10;
 
-        }
+        //}
 
-        if (other.gameObject.CompareTag("Heart"))
-        {
-            Destroy(other.gameObject);
-            startPickUP();
-            if(playerHealth < 1.0f)
-            {
-                PlayerHealth += 0.05f;
+        //if (other.gameObject.CompareTag("Heart"))
+        //{
+        //    Destroy(other.gameObject);
+        //    startPickUP();
+        //    if(playerHealth < 1.0f)
+        //    {
+        //        PlayerHealth += 0.05f;
 
-            }
-        }
+        //    }
+        //}
 
-        if (other.gameObject.CompareTag("Mushroom"))
-        {
-            Destroy(other.gameObject) ;
-            PlayerHealth -= 0.1f;
+        //if (other.gameObject.CompareTag("Mushroom"))
+        //{
+        //    Destroy(other.gameObject) ;
+        //    PlayerHealth -= 0.1f;
 
-        }
+        //}
     }
 
     void startPickUP()

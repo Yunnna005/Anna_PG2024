@@ -7,22 +7,33 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    public static Inventory Instance;
-    public List<Item> inventorySlots = new List<Item>();
+    Dictionary<Item, int> inventorySlots;
 
     public Transform ItemContent; 
     public GameObject InventoryItem;
 
-    int ItemQty = 1;
-    private void Awake()
+    void Start()
     {
-        Instance = this;
-        ListItems();
+        inventorySlots = new Dictionary<Item, int>();
     }
+    public void AddItem(Item item){
 
-    public void AddItem(Item item)
-    {
-        inventorySlots.Add(item);
+        if (inventorySlots.ContainsKey(item)){
+            inventorySlots[item]++;
+        }
+        else
+        {
+            print("The item in AddItem method");
+            inventorySlots.Add(item, 1);
+            ListItems();
+        }
+        foreach (var kvp in inventorySlots)
+        {
+            Item item1 = kvp.Key;
+            int quantity = kvp.Value;
+
+            Debug.Log($"Item: {item1.name}, Quantity: {quantity}");
+        } 
     }
 
     public void RemoveItem(Item item) 
@@ -32,39 +43,16 @@ public class Inventory : MonoBehaviour
 
     public void ListItems()
     {
-        foreach (Item item in inventorySlots)
+        foreach (var (item, quantity) in inventorySlots) 
         {
+            GameObject GObject = Instantiate(InventoryItem, ItemContent);
+            var itemName = GObject.transform.Find("ItemName").GetComponent<Text>();
+            var itemIcon = GObject.transform.Find("ItemIcon").GetComponent<Image>(); 
+            var itemQty = GObject.transform.Find("ItemQty").GetComponent<Text>();
 
-            GameObject existingObject = FindExistingObject(item);
-
-            if (existingObject != null)
-            {
-                ItemQty++;
-                var itemQty = existingObject.transform.Find("ItemQty").GetComponent<Text>(); //to find the qty of the object
-                itemQty.text = ItemQty.ToString();
-            }
-            else
-            {
-                GameObject GObject = Instantiate(InventoryItem, ItemContent);
-                var itemName = GObject.transform.Find("ItemName").GetComponent<Text>(); //to find the name of the object
-                var itemIcon = GObject.transform.Find("ItemIcon").GetComponent<Image>(); // to find the 2d sprite of the object
-
-                itemName.text = item.itemName;
-                itemIcon.sprite = item.icon;
-            }
+            itemName.text = item.itemName;
+            itemIcon.sprite = item.icon;
+            itemQty.text = quantity.ToString();
         }
-    }
-
-    public GameObject FindExistingObject(Item item)
-    {
-        foreach(Transform child in ItemContent)
-        {
-            var itemName = child.Find("ItemName").GetComponent<Text>();
-            if (itemName.text == item.itemName)
-            {
-                return child.gameObject;
-            }
-        }
-        return null;
     }
 }

@@ -13,6 +13,7 @@ TagManager:
   - Heart
   - HealthBar
   - Mushroom
+  - ItemToCollect
   layers:
   - Default
   - TransparentFX
