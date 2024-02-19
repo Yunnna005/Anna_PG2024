@@ -12,6 +12,8 @@ public class Inventory : MonoBehaviour
     public Transform ItemContent; 
     public GameObject InventoryItem;
 
+    public GameObject content;
+
     void Start()
     {
         inventorySlots = new Dictionary<Item, int>();
@@ -20,6 +22,7 @@ public class Inventory : MonoBehaviour
 
         if (inventorySlots.ContainsKey(item)){
             inventorySlots[item]++;
+            ListItems();
         }
         else
         {
@@ -45,14 +48,41 @@ public class Inventory : MonoBehaviour
     {
         foreach (var (item, quantity) in inventorySlots) 
         {
-            GameObject GObject = Instantiate(InventoryItem, ItemContent);
-            var itemName = GObject.transform.Find("ItemName").GetComponent<Text>();
-            var itemIcon = GObject.transform.Find("ItemIcon").GetComponent<Image>(); 
-            var itemQty = GObject.transform.Find("ItemQty").GetComponent<Text>();
+            if (IsDupa(item.itemName) != null)
+            {
+                GameObject slot = IsDupa(item.itemName);
 
-            itemName.text = item.itemName;
-            itemIcon.sprite = item.icon;
-            itemQty.text = quantity.ToString();
+                var itemQty = slot.transform.Find("ItemQty").GetComponent<Text>();
+                itemQty.text = quantity.ToString();
+            }
+            else
+            {
+                GameObject itemSlot = Instantiate(InventoryItem, ItemContent);
+                var itemName = itemSlot.transform.Find("ItemName").GetComponent<Text>();
+                var itemIcon = itemSlot.transform.Find("ItemIcon").GetComponent<Image>();
+                var itemQty = itemSlot.transform.Find("ItemQty").GetComponent<Text>();
+
+                print(quantity);
+                itemName.text = item.itemName;
+                itemIcon.sprite = item.icon;
+                itemQty.text = quantity.ToString();
+            }
+
         }
+    }
+
+    private GameObject IsDupa(string target)
+    {
+        if (content == null) return null;
+        GameObject[] allContent = content.GetComponents<GameObject>();
+        foreach (GameObject slot in allContent)
+        {
+            var itemName = slot.transform.Find("ItemName").GetComponent<Text>();
+            if (itemName.ToString().Equals(target))
+                return slot;
+           
+        }
+           
+        return null;
     }
 }

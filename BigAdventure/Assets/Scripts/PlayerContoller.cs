@@ -39,7 +39,7 @@ public class PlayerContoller : MonoBehaviour
 
     float currentMaxLevel;
 
-    private Inventory inventory;
+    Inventory inventory;
 
     float PlayerHealth {  get { return playerHealth; }
         set
@@ -93,7 +93,7 @@ public class PlayerContoller : MonoBehaviour
 
         panelGameOver.SetActive(false);
 
-        inventory = gameObject.AddComponent<Inventory>();
+        inventory = GetComponent<Inventory>();
     }
     // Update is called once per frame
     void Update()
@@ -167,7 +167,7 @@ public class PlayerContoller : MonoBehaviour
         //    Destroy(other.gameObject);
         //    _diamonds++;
         //    print("Diamonds: " + _diamonds);
-         
+
         //    PlayerProgress += 10;
 
         //}
