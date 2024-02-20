@@ -8,40 +8,33 @@ using UnityEngine.UI;
 
 public class PlayerContoller : MonoBehaviour, IPlayer
 {
+    public GameObject swordPrefab;
+    public GameObject panelGameOver;
+    public Scrollbar healthBar;
+    public Scrollbar levelBar;
+
     float leftRightMove;
     float backForwardMove;
     private float _speed = 5;
     private float _jumpForce = 300.0f;
     private bool _isOnGround = true;
     private float _gravityModifier = 1.2f;
+    float pickUpTimer;
+    float PickUPAnimationTime = 1.50f;
+    float playerHealth = 1.0f;
+    int playerExpreienceLevel = 0;
+    int levelProgress = 0;
+    int levelTarget = 100;
+    float levelBarSize = 0f;
 
     Rigidbody playerRigitbody;
     Animator animator;
-
-    public GameObject swordPrefab;
-
-    private int _diamonds = 0;
-    public GameObject panelGameOver;
-
-    float pickUpTimer;
-    float PickUPAnimationTime = 1.50f;
-
-    public Scrollbar healthBar;
     Text healthPercentage;
-    float playerHealth = 1.0f;
-
-    int playerExpreienceLevel = 0;
-    public Scrollbar levelBar;
-    int levelProgress = 0;
-    int levelTarget = 100;
     Text levelPercentage;
-    float levelBarSize = 0f;
-
-    float currentMaxLevel;
-
     Inventory inventory;
-
     Item pickupItem;
+
+
     float PlayerHealth {  get { return playerHealth; }
         set
         {
@@ -162,13 +155,12 @@ public class PlayerContoller : MonoBehaviour, IPlayer
 
         if (pickupItem.damage)
         {
-            print("I damaged the player");
             ApplyDamage(pickupItem.itemValue);
         }
         else if (pickupItem.heal)
         {
-            print("I healled the player");
             ApplyHeal(pickupItem.itemValue);
+
         }else if (pickupItem.progress)
         {
             ApplyLevelProgress((int)pickupItem.itemValue);
@@ -181,22 +173,8 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     {
         animator.SetBool("isPickUp", true);
         pickUpTimer = PickUPAnimationTime;
-        //DisableObjectWithDelay();
 
     }
-
-    IEnumerator DisableObjectWithDelay()
-    {
-        yield return new WaitForSeconds(0.01f); 
-        swordPrefab.SetActive(false);
-    }
-
-    IEnumerator EnableObjectWithDelay()
-    {
-        yield return new WaitForSeconds(0.01f); 
-        swordPrefab.SetActive(true);
-    }
-
 
     public int PlayerLevelSetandCheck(int experienceLevel)
     {
