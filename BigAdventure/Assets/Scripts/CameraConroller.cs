@@ -55,11 +55,21 @@ public class CameraConroller : MonoBehaviour
 
     void UpdateCameraPosition()
     {
-        _orbit_camera_view3 = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * _turnSpeed, Vector3.up) * _orbit_camera_view3;
-        _orbit_camera_view1 = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * _turnSpeed, Vector3.up) * _orbit_camera_view1;
 
-        camera_view1.transform.position = player.transform.position  + _orbit_camera_view1;
-        camera_view3.transform.position = player.transform.position  + _orbit_camera_view3;
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
+
+        // Adjust the orbit vectors based on horizontal mouse movement
+        _orbit_camera_view3 = Quaternion.AngleAxis(mouseX * _turnSpeed, Vector3.up) * _orbit_camera_view3;
+        _orbit_camera_view1 = Quaternion.AngleAxis(mouseX * _turnSpeed, Vector3.up) * _orbit_camera_view1;
+
+        // Update the vertical rotation of the cameras
+        camera_view1.transform.Rotate(Vector3.right, -mouseY * _turnSpeed);
+        camera_view3.transform.Rotate(Vector3.right, -mouseY * _turnSpeed);
+
+        // Update the camera positions relative to the player
+        camera_view1.transform.position = player.transform.position + _orbit_camera_view1;
+        camera_view3.transform.position = player.transform.position + _orbit_camera_view3;
 
     }
 }
