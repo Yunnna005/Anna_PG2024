@@ -60,5 +60,6 @@ public class CameraConroller : MonoBehaviour
 
         camera_view1.transform.position = player.transform.position  + _orbit_camera_view1;
         camera_view3.transform.position = player.transform.position  + _orbit_camera_view3;
+
     }
 }
