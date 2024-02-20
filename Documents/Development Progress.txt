@@ -9,4 +9,4 @@
 06/02/24 LevelBar is done. Start working on Inventory system.
 09/02/24 Keep working on Inventory system. Problem with updating the inventory by default.
 19/02/24 Still working on Inventory system.
-20/02/24 Inventory system is done. Created IPlayer Interface and redid the PlayerHealth,PlayerProgress.
+20/02/24 Inventory system is done. Created IPlayer Interface and redid the PlayerHealth,PlayerProgress. Added some new Items to collect.

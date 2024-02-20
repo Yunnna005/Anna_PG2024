@@ -30,7 +30,7 @@ public class Inventory : MonoBehaviour
             inventorySlots.Add(item, 1);
             ListItems();
         }
-        foreach (var kvp in inventorySlots)
+        foreach (var kvp in inventorySlots) // to check if item in the inventorySlot
         {
             Item item1 = kvp.Key;
             int quantity = kvp.Value;
