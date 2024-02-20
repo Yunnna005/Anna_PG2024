@@ -48,10 +48,11 @@ public class Inventory : MonoBehaviour
     {
         foreach (var (item, quantity) in inventorySlots) 
         {
-            if (IsDupa(item.itemName) != null)
-            {
-                GameObject slot = IsDupa(item.itemName);
+            GameObject slot = HasDuplicate(item);
 
+            if (slot != null)
+            {
+                // Update existing slot
                 var itemQty = slot.transform.Find("ItemQty").GetComponent<Text>();
                 itemQty.text = quantity.ToString();
             }
@@ -71,18 +72,19 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    private GameObject IsDupa(string target)
+    private GameObject HasDuplicate(Item target)
     {
-        if (content == null) return null;
-        GameObject[] allContent = content.GetComponents<GameObject>();
-        foreach (GameObject slot in allContent)
+        foreach (Transform child in content.transform)
         {
-            var itemName = slot.transform.Find("ItemName").GetComponent<Text>();
-            if (itemName.ToString().Equals(target))
-                return slot;
-           
+            var itemName = child.transform.Find("ItemName").GetComponent<Text>();
+
+            if (itemName.text == target.itemName)
+            {
+                
+                return child.gameObject;
+            }
         }
-           
+
         return null;
     }
 }
