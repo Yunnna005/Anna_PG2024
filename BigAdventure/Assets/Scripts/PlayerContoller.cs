@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerContoller : MonoBehaviour
+public class PlayerContoller : MonoBehaviour, IPlayer
 {
     float leftRightMove;
     float backForwardMove;
@@ -41,6 +41,7 @@ public class PlayerContoller : MonoBehaviour
 
     Inventory inventory;
 
+    Item pickupItem;
     float PlayerHealth {  get { return playerHealth; }
         set
         {
@@ -150,45 +151,30 @@ public class PlayerContoller : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        ItemController itemController = other.GetComponent<ItemController>();
+        pickupItem = itemController.Item;
+
         if (other.CompareTag("ItemToCollect"))
         {
-            ItemController itemController = other.GetComponent<ItemController>();
-            Item pickupItem = itemController.Item;
-
             inventory.AddItem(pickupItem);
+        }  
 
-            Destroy(other.gameObject);
+
+        if (pickupItem.damage)
+        {
+            print("I damaged the player");
+            ApplyDamage(pickupItem.itemValue);
+        }
+        else if (pickupItem.heal)
+        {
+            print("I healled the player");
+            ApplyHeal(pickupItem.itemValue);
+        }else if (pickupItem.progress)
+        {
+            ApplyLevelProgress((int)pickupItem.itemValue);
         }
 
-
-        //if (other.gameObject.CompareTag("Diamond"))
-        //{  
-        //    startPickUP();
-        //    Destroy(other.gameObject);
-        //    _diamonds++;
-        //    print("Diamonds: " + _diamonds);
-
-        //    PlayerProgress += 10;
-
-        //}
-
-        //if (other.gameObject.CompareTag("Heart"))
-        //{
-        //    Destroy(other.gameObject);
-        //    startPickUP();
-        //    if(playerHealth < 1.0f)
-        //    {
-        //        PlayerHealth += 0.05f;
-
-        //    }
-        //}
-
-        //if (other.gameObject.CompareTag("Mushroom"))
-        //{
-        //    Destroy(other.gameObject) ;
-        //    PlayerHealth -= 0.1f;
-
-        //}
+        Destroy(other.gameObject);
     }
 
     void startPickUP()
@@ -234,5 +220,20 @@ public class PlayerContoller : MonoBehaviour
                 return 1000;
         }
   
+    }
+
+    public void ApplyDamage(float value)
+    {
+        PlayerHealth -= value;
+    }
+
+    public void ApplyHeal(float value)
+    {
+        PlayerHealth += value;
+    }
+
+    public void ApplyLevelProgress(int value)
+    {
+        PlayerProgress += value;
     }
 }
