@@ -23,5 +23,6 @@ public class MouseController : MonoBehaviour
         _mouseY = Input.GetAxis("Mouse Y") * _verticalSpeed;
 
         transform.Rotate(0, _mouseX, 0);
+
     }
 }
