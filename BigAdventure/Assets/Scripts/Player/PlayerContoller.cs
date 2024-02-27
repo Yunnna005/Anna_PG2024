@@ -26,6 +26,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     int levelProgress = 0;
     int levelTarget = 100;
     float levelBarSize = 0f;
+    bool isPlayingMiniGame = false;
 
     Rigidbody playerRigitbody;
     Animator animator;
@@ -131,14 +132,23 @@ public class PlayerContoller : MonoBehaviour, IPlayer
 
         animator.SetBool("isAttacking", Input.GetKeyDown(KeyCode.Mouse0));
 
+        if (Input.GetKeyDown(KeyCode.R) && isPlayingMiniGame)
+        {
+            print("I am playing mini game");
+            Basketball_miniGame basketball_MiniGame = FindAnyObjectByType<Basketball_miniGame>();
+
+            basketball_MiniGame.StartTheGame();
+        }
     }
+
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("MiniGame"))
         {
             _isOnGround = true;
             animator.SetBool("isJumping", false);
+            PlayMode(true);
         }
     }
 
@@ -213,5 +223,10 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     public void ApplyLevelProgress(int value)
     {
         PlayerProgress += value;
+    }
+
+    public void PlayMode(bool isPlaying)
+    {
+        isPlayingMiniGame = isPlaying;
     }
 }

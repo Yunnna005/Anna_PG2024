@@ -7,4 +7,6 @@ public interface IPlayer
     void ApplyDamage(float value);
     void ApplyHeal(float value);
     void ApplyLevelProgress(int value);
+
+    void PlayMode(bool isPlaying);
 }
