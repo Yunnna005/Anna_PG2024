@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
@@ -35,6 +36,10 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     Inventory inventory;
     Item pickupItem;
 
+    Basketball_miniGame basketball_MiniGame;
+    private Transform my_shield;
+    private Transform my_sword;
+    private ballController my_Ball;
 
     float PlayerHealth {  get { return playerHealth; }
         set
@@ -73,6 +78,22 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     // Start is called before the first frame update
     void Start()
     {
+        Transform[] transforms = GetComponentsInChildren<Transform>();
+
+        foreach (Transform t in transforms)
+        {
+            if (t.name == "Sword")
+            {
+                my_sword = t;
+            }
+
+            if (t.name == "Shield05")
+            {
+                my_shield = t;
+            }
+        }
+      
+
         playerRigitbody = GetComponent<Rigidbody>();
 
         Physics.gravity *= _gravityModifier;
@@ -94,6 +115,11 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     void Update()
     {
         PlayerMovements();
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            //my_Ball.throwMe(transform.forward);
+        }
         pickUpTimer -= Time.deltaTime;
         if (pickUpTimer <= 0)
         {
@@ -132,19 +158,35 @@ public class PlayerContoller : MonoBehaviour, IPlayer
 
         animator.SetBool("isAttacking", Input.GetKeyDown(KeyCode.Mouse0));
 
-        if (Input.GetKeyDown(KeyCode.R) && isPlayingMiniGame)
+        if (isPlayingMiniGame)
         {
-            print("I am playing mini game");
-            Basketball_miniGame basketball_MiniGame = FindAnyObjectByType<Basketball_miniGame>();
 
-            basketball_MiniGame.StartTheGame();
+            if (basketball_MiniGame)
+            {
+                print("I am playing mini game");
+                basketball_MiniGame.PlayingGame(this);
+                DisArm();
+            }
+            else
+                basketball_MiniGame = FindAnyObjectByType<Basketball_miniGame>();
+        }
+        else
+        {
+
+            basketball_MiniGame = null;
+            //basketball_MiniGame.EndGame();
         }
     }
 
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("MiniGame"))
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            _isOnGround = true;
+            animator.SetBool("isJumping", false);
+        }
+        if (collision.gameObject.CompareTag("MiniGame"))
         {
             _isOnGround = true;
             animator.SetBool("isJumping", false);
@@ -178,7 +220,11 @@ public class PlayerContoller : MonoBehaviour, IPlayer
 
         Destroy(other.gameObject);
     }
-
+    void DisArm()
+    {
+         my_shield.gameObject.SetActive(false);
+         my_sword.gameObject.SetActive(false);
+    }
     void startPickUP()
     {
         animator.SetBool("isPickUp", true);
@@ -228,5 +274,10 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     public void PlayMode(bool isPlaying)
     {
         isPlayingMiniGame = isPlaying;
+    }
+
+    internal void YourBallIs(ballController ballController)
+    {
+        my_Ball = ballController;
     }
 }

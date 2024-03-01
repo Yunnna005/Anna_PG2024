@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class ballController : MonoBehaviour
 {
+
+    Rigidbody rb;
+
+    private void Start()
+    {
+        rb = GetComponentInChildren<Rigidbody>();
+    }
     //public Basketball_miniGame basketball_MiniGameScript;
-    
+
     //void OnCollisionEnter(Collision collision)
     //{
     //    if (collision.gameObject.CompareTag("Ground"))
@@ -13,4 +20,10 @@ public class ballController : MonoBehaviour
     //        basketball_MiniGameScript.OnBallHitFloor();
     //    }
     //}
+
+    internal void throwMe(Vector3 dir)
+        {
+        rb.AddForce(dir, ForceMode.Impulse);
+        }
+
 }
