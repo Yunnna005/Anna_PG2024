@@ -12,3 +12,4 @@
 20/02/24 Inventory system is done. Created IPlayer Interface and redid the PlayerHealth,PlayerProgress. Added some new Items to collect. Added Basketball court model that made by myself. Start updating cameraController for more confinient play proccess.
 23/02/24 Start working on Basketball mini game. Created ball model in Maya and textured. Created Basketball_miniGame and Basketball_ball scripts.
 27/02/24 Working on miniGame.
+01/03/24 Working on miniGame. Need to fix my_ball.trowMe();
