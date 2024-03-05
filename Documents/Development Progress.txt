@@ -13,3 +13,4 @@
 23/02/24 Start working on Basketball mini game. Created ball model in Maya and textured. Created Basketball_miniGame and Basketball_ball scripts.
 27/02/24 Working on miniGame.
 01/03/24 Working on miniGame. Need to fix my_ball.trowMe();
+05/03/24 The Basketball Mini Game is done but it needs to fix the ending of the game. The player still in play mode and the weapons doo't appear.

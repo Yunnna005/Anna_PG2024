@@ -163,7 +163,6 @@ public class PlayerContoller : MonoBehaviour, IPlayer
 
             if (basketball_MiniGame)
             {
-                print("I am playing mini game");
                 basketball_MiniGame.PlayingGame(this);
                 DisArm();
             }
@@ -174,7 +173,6 @@ public class PlayerContoller : MonoBehaviour, IPlayer
         {
 
             basketball_MiniGame = null;
-            //basketball_MiniGame.EndGame();
         }
     }
 
@@ -191,6 +189,10 @@ public class PlayerContoller : MonoBehaviour, IPlayer
             _isOnGround = true;
             animator.SetBool("isJumping", false);
             PlayMode(true);
+        }
+        else
+        {
+            PlayMode(false);
         }
     }
 
@@ -279,5 +281,6 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     internal void YourBallIs(ballController ballController)
     {
         my_Ball = ballController;
+        my_Ball.throwMe(transform.forward + Vector3.up);
     }
 }

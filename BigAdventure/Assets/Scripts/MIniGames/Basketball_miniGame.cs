@@ -14,16 +14,19 @@ public class Basketball_miniGame : MonoBehaviour, IPlayGame
     public Text canvas_text;
     public GameObject start_game_button;
     GameObject player;
-    private bool isBallInGame = false;
     public float distance = 2.0f;
     GameObject newBall;
     PlayerContoller thePlayer;
+    public GameObject diamondPrefab;
+    int max_Reward = 0;
+    float messageDuration = 5f;
 
     // Start is called before the first frame update
     void Start()
     {
         canvas.SetActive(false);
         player = GameObject.FindGameObjectWithTag("Player");
+        thePlayer = FindAnyObjectByType<PlayerContoller>();
     }
 
     // Update is called once per frame
@@ -38,9 +41,9 @@ public class Basketball_miniGame : MonoBehaviour, IPlayGame
             case GameState.startingMessage:
 
 
-                if (Input.GetKey(KeyCode.R))
+                if (Input.GetKeyDown(KeyCode.R))
                 {
-                    InstantiateNewBall();
+                  
                     isCurrently = GameState.Playing;
                     canvas.SetActive(false);
 
@@ -48,14 +51,19 @@ public class Basketball_miniGame : MonoBehaviour, IPlayGame
                 break;
 
             case GameState.Playing:
-                
-                
+
+                if (Input.GetKeyDown(KeyCode.R))
+                {
+                    InstantiateNewBall();
+                }
+                break;
+
+            case GameState.Ending:
+                //Invoke("HideCanvas", messageDuration);
+                //thePlayer.PlayMode(false);
                 break;
         }
-
     }
-
-
 
 
     private void OnCollisionEnter(Collision collision)
@@ -89,16 +97,16 @@ public class Basketball_miniGame : MonoBehaviour, IPlayGame
 
     public void InstantiateNewBall()
     {
-        isBallInGame = true;
 
         Vector3 playerPosition = player.transform.position;
         Vector3 playerForward = player.transform.forward;
 
-        Vector3 spawnPosition = playerPosition + playerForward;
+        Vector3 spawnPosition = playerPosition + playerForward + Vector3.up;
 
         newBall = Instantiate(ball_prefab, spawnPosition, Quaternion.identity);
+      
         thePlayer.YourBallIs(newBall.GetComponentInChildren<ballController>());
-        //newBall.transform.parent = player.transform;
+
     }
 
     public void PlayingGame(PlayerContoller theNewPlayer)
@@ -113,7 +121,27 @@ public class Basketball_miniGame : MonoBehaviour, IPlayGame
 
     public void EndGame()
     {
-        isCurrently = GameState.inActive;
-        thePlayer = null;
+        canvas.SetActive(true);
+        canvas_text.text = "You got all rewards. The game is ended.";
+        isCurrently = GameState.Ending;
+         thePlayer = null;
+    }
+
+    public void Reward(int maxReward)
+    {
+        int randomPosition = UnityEngine.Random.Range(-3, 7);
+        Vector3 spawnPosition = this.transform.position + new Vector3((float)randomPosition, 0f, (float)randomPosition) + Vector3.up * 0.5f;
+
+        Instantiate(diamondPrefab, spawnPosition, Quaternion.Euler(-90f, 0f, 0f));
+        max_Reward++;
+
+        if (max_Reward == maxReward)
+        {
+            EndGame();
+        }
+    }
+    void HideCanvas()
+    {
+        canvas.SetActive(false);
     }
 }
