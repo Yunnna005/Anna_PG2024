@@ -17,6 +17,7 @@ TagManager:
   - Slot
   - MiniGame
   - Ball
+  - Basketball_basket
   layers:
   - Default
   - TransparentFX

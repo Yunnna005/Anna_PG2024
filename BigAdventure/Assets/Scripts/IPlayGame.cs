@@ -6,4 +6,5 @@ interface IPlayGame
 {
     void PlayingGame(PlayerContoller thePlayer);
     void EndGame();
+    void Reward(int maxReward);
 }
