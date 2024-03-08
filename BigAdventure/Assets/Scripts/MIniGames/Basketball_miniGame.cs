@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class Basketball_miniGame : MonoBehaviour, IPlayGame
 {
-    enum GameState { inActive, startingMessage, Playing, Rewarding, Ending }
+    enum GameState { inActive, startingMessage, Playing, Rewarding, Ending, Finish }
     GameState isCurrently = GameState.inActive;
     public GameObject ball_prefab;
     public GameObject canvas;
@@ -19,7 +19,8 @@ public class Basketball_miniGame : MonoBehaviour, IPlayGame
     PlayerContoller thePlayer;
     public GameObject diamondPrefab;
     int max_Reward = 0;
-    float messageDuration = 5f;
+    float canvasTimer;
+    float activeCanvasTime = 2.50f;
 
     // Start is called before the first frame update
     void Start()
@@ -59,10 +60,13 @@ public class Basketball_miniGame : MonoBehaviour, IPlayGame
                 break;
 
             case GameState.Ending:
-                //Invoke("HideCanvas", messageDuration);
-                //thePlayer.PlayMode(false);
+                ActiveCanvas();
+                break;
+            case GameState.Finish:
                 break;
         }
+
+        canvasTimer -= Time.deltaTime;
     }
 
 
@@ -70,12 +74,25 @@ public class Basketball_miniGame : MonoBehaviour, IPlayGame
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+       
             canvas.SetActive(true);
-            canvas_text.text = "Basketball mini game.\r\n\rPress \"Start Game\" to start.";
+
+            if(isCurrently == GameState.Finish)
+            {
+                canvas_text.text = "You have already played this game.";
+
+            }
+            else
+            {
+                thePlayer.PlayMode(true);
+                canvas_text.text = "Basketball mini game.\r\n\rPress \"Start Game\" to start.";
+            }
+
         }
         else
         {
             canvas.SetActive(false);
+
         }
     }
 
@@ -84,7 +101,7 @@ public class Basketball_miniGame : MonoBehaviour, IPlayGame
 
         print("Start mini basketball game");
         canvas_text.text = "Mini game started. \r\n\r\nTry to through the ball into the busket to get diamond. \r\n\r\nYou can get 3 diamonds.\r\n\r\nUse \"R\" to through the ball.";
-
+        thePlayer.DisArm();
         start_game_button.SetActive(false);
 
     }
@@ -121,15 +138,15 @@ public class Basketball_miniGame : MonoBehaviour, IPlayGame
 
     public void EndGame()
     {
-        canvas.SetActive(true);
         canvas_text.text = "You got all rewards. The game is ended.";
+        thePlayer.ActArm();
         isCurrently = GameState.Ending;
-         thePlayer = null;
+        canvasTimer = activeCanvasTime;
     }
 
     public void Reward(int maxReward)
     {
-        int randomPosition = UnityEngine.Random.Range(-3, 7);
+        int randomPosition = UnityEngine.Random.Range(-4, 7);
         Vector3 spawnPosition = this.transform.position + new Vector3((float)randomPosition, 0f, (float)randomPosition) + Vector3.up * 0.5f;
 
         Instantiate(diamondPrefab, spawnPosition, Quaternion.Euler(-90f, 0f, 0f));
@@ -138,10 +155,25 @@ public class Basketball_miniGame : MonoBehaviour, IPlayGame
         if (max_Reward == maxReward)
         {
             EndGame();
+            
         }
     }
-    void HideCanvas()
+
+    internal void ClearMessage()
     {
-        canvas.SetActive(false);
+          canvas.SetActive(false);
+    }
+
+    public void ActiveCanvas()
+    {
+        if(canvasTimer<=0) 
+        {
+            canvas.SetActive(false);
+            isCurrently = GameState.Finish;
+        }
+        else
+        {
+            canvas.SetActive(true);
+        }
     }
 }

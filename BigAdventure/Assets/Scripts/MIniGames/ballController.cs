@@ -36,7 +36,7 @@ public class ballController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("MiniGame"))
         {
-            Destroy(gameObject);
+            Destroy(gameObject.transform.parent.gameObject);
         }
     }
 
