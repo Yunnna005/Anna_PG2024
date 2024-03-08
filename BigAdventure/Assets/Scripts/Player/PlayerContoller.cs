@@ -115,16 +115,10 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     void Update()
     {
         PlayerMovements();
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            //my_Ball.throwMe(transform.forward);
-        }
         pickUpTimer -= Time.deltaTime;
         if (pickUpTimer <= 0)
         {
             animator.SetBool("isPickUp", false);
-            //EnableObjectWithDelay();
         }
 
         if (playerHealth == 0)
@@ -164,14 +158,17 @@ public class PlayerContoller : MonoBehaviour, IPlayer
             if (basketball_MiniGame)
             {
                 basketball_MiniGame.PlayingGame(this);
-                DisArm();
+
             }
             else
+            {
                 basketball_MiniGame = FindAnyObjectByType<Basketball_miniGame>();
+            
+            }
         }
         else
         {
-
+     
             basketball_MiniGame = null;
         }
     }
@@ -183,16 +180,20 @@ public class PlayerContoller : MonoBehaviour, IPlayer
         {
             _isOnGround = true;
             animator.SetBool("isJumping", false);
+
         }
+
         if (collision.gameObject.CompareTag("MiniGame"))
         {
             _isOnGround = true;
             animator.SetBool("isJumping", false);
-            PlayMode(true);
         }
         else
         {
-            PlayMode(false);
+            if (basketball_MiniGame)
+            {
+                basketball_MiniGame.ClearMessage();
+            }
         }
     }
 
@@ -222,10 +223,17 @@ public class PlayerContoller : MonoBehaviour, IPlayer
 
         Destroy(other.gameObject);
     }
-    void DisArm()
+    internal void DisArm()
     {
-         my_shield.gameObject.SetActive(false);
-         my_sword.gameObject.SetActive(false);
+        print("DisActivating");
+        my_shield.gameObject.SetActive(false);
+        my_sword.gameObject.SetActive(false);
+    }
+    internal void ActArm()
+    {
+        print("Activating");
+        my_shield.gameObject.SetActive(true);
+        my_sword.gameObject.SetActive(true);
     }
     void startPickUP()
     {
