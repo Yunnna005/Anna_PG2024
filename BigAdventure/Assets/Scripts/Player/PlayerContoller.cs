@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     public GameObject panelGameOver;
     public Scrollbar healthBar;
     public Scrollbar levelBar;
+    public Text level_text;
 
     float leftRightMove;
     float backForwardMove;
@@ -36,10 +38,12 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     Inventory inventory;
     Item pickupItem;
 
+
     Basketball_miniGame basketball_MiniGame;
     private Transform my_shield;
     private Transform my_sword;
     private ballController my_Ball;
+    private Vector3 lastPosition;
 
     float PlayerHealth {  get { return playerHealth; }
         set
@@ -63,7 +67,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
                 playerExpreienceLevel++;
                 levelProgress -= levelTarget;
                 levelTarget = PlayerLevelSetandCheck(playerExpreienceLevel);
-                
+                level_text.text = "Level: " + PlayerLevelSetLevel(levelTarget);
             }
 
             levelBarSize =  (float)levelProgress/levelTarget;
@@ -110,6 +114,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
         panelGameOver.SetActive(false);
 
         inventory = GetComponent<Inventory>();
+        level_text.text = "Level: 0";
     }
     // Update is called once per frame
     void Update()
@@ -127,12 +132,42 @@ public class PlayerContoller : MonoBehaviour, IPlayer
             print("GameOver");
             panelGameOver.SetActive(true);
         }
+
+        lastPosition = transform.position; ;
     }
 
     private void PlayerMovements()
     {
+        bool movementPossible = true;
         //Move Back or Forward
         backForwardMove = Input.GetAxis("Vertical");
+        // playerRigitbody.AddForce(Vector3.forward * 100*_speed * backForwardMove);
+        //Collider[] allColls = Physics.OverlapBox(transform.position + Vector3.forward * _speed * Time.deltaTime * backForwardMove, new Vector3(1, 1, 1), transform.rotation);
+        //foreach (Collider c in  allColls)
+        //{
+        //    if (c.gameObject.name == "Treasure")
+        //    {
+        //        movementPossible = false;
+        //    }
+
+        //}
+        //if (movementPossible)
+        //{
+
+
+        //    transform.Translate(Vector3.forward * _speed * Time.deltaTime * backForwardMove);
+        //    animator.SetFloat("RunBackForward", backForwardMove);
+        //    animator.SetBool("isRunningBackForward", backForwardMove > 0 || backForwardMove < 0);
+
+        //    //Move left or right
+        //    leftRightMove = Input.GetAxis("Horizontal");
+        //    transform.Translate(Vector3.right * Time.deltaTime * _speed * leftRightMove);
+        //    animator.SetFloat("runLeftRight", leftRightMove);
+        //    animator.SetBool("isRunningLeftRight", leftRightMove > 0 || leftRightMove < 0);
+
+        //}
+
+
         transform.Translate(Vector3.forward * _speed * Time.deltaTime * backForwardMove);
         animator.SetFloat("RunBackForward", backForwardMove);
         animator.SetBool("isRunningBackForward", backForwardMove > 0 || backForwardMove < 0);
@@ -176,6 +211,12 @@ public class PlayerContoller : MonoBehaviour, IPlayer
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.collider.gameObject.name == "Treasure")
+        {
+            print("ouch");
+            transform.position = lastPosition;
+        }
+        
         if (collision.gameObject.CompareTag("Ground"))
         {
             _isOnGround = true;
@@ -255,8 +296,8 @@ public class PlayerContoller : MonoBehaviour, IPlayer
                
             case 2:
                 return 400;
-                
-                case 3:
+  
+            case 3:
                 return 600;
               
 ;
@@ -264,6 +305,20 @@ public class PlayerContoller : MonoBehaviour, IPlayer
                 return 1000;
         }
   
+    }
+
+    public int PlayerLevelSetLevel(int experienceLevel)
+    {
+        switch (experienceLevel)
+        {
+            case 250:
+                return 1;
+            case 400:
+                return 2;
+
+        default:
+             return 5;
+        }
     }
 
     public void ApplyDamage(float value)
