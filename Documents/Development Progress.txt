@@ -16,3 +16,4 @@
 05/03/24 The Basketball Mini Game is done but it needs to fix the ending of the game. The player still in play mode and the weapons doo't appear.
 08/03/24 The Basketball Mini Game is done, needs to fix a fix when player doesnot finish the game but left the game area.
 12/03/24 Start working with Treasure box. Add displayed player level.
+15/03/24 Still working on Treasure box system. Changed Treasure system(withoud canvas). Fixed collitions.

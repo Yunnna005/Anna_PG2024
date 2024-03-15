@@ -9,4 +9,7 @@ public interface IPlayer
     void ApplyLevelProgress(int value);
 
     void PlayMode(bool isPlaying);
+    void CollectTreasure(bool isCollecting);
+
+    
 }
