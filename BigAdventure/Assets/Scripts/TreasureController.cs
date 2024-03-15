@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TreasureController : MonoBehaviour
 {
-    public Canvas canvas;
+    public Text text;
     // Start is called before the first frame update
     void Start()
     {
-        canvas.enabled = false;
+        text.enabled = false;
+        text.text = "Press F to get the tresure";
     }
 
     // Update is called once per frame
@@ -18,11 +20,16 @@ public class TreasureController : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void TreasureOpen(PlayerContoller player)
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            canvas.enabled = true;
-        }
+        text.enabled = true;
+        player.CollectTreasure(true);
+    }
+
+    public void GetReward()
+    {
+        text.enabled = false;
+        Destroy(gameObject);
+        print("I got reward");
     }
 }

@@ -30,6 +30,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     int levelTarget = 100;
     float levelBarSize = 0f;
     bool isPlayingMiniGame = false;
+    bool isStartCollecttreasure= false;
 
     Rigidbody playerRigitbody;
     Animator animator;
@@ -37,6 +38,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     Text levelPercentage;
     Inventory inventory;
     Item pickupItem;
+    TreasureController treasureController;
 
 
     Basketball_miniGame basketball_MiniGame;
@@ -44,6 +46,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     private Transform my_sword;
     private ballController my_Ball;
     private Vector3 lastPosition;
+    Vector3 flatMovementforJump;
 
     float PlayerHealth {  get { return playerHealth; }
         set
@@ -115,6 +118,8 @@ public class PlayerContoller : MonoBehaviour, IPlayer
 
         inventory = GetComponent<Inventory>();
         level_text.text = "Level: 0";
+
+        treasureController = FindAnyObjectByType<TreasureController>();
     }
     // Update is called once per frame
     void Update()
@@ -138,79 +143,108 @@ public class PlayerContoller : MonoBehaviour, IPlayer
 
     private void PlayerMovements()
     {
-        bool movementPossible = true;
         //Move Back or Forward
         backForwardMove = Input.GetAxis("Vertical");
-        // playerRigitbody.AddForce(Vector3.forward * 100*_speed * backForwardMove);
-        //Collider[] allColls = Physics.OverlapBox(transform.position + Vector3.forward * _speed * Time.deltaTime * backForwardMove, new Vector3(1, 1, 1), transform.rotation);
-        //foreach (Collider c in  allColls)
-        //{
-        //    if (c.gameObject.name == "Treasure")
-        //    {
-        //        movementPossible = false;
-        //    }
 
-        //}
-        //if (movementPossible)
-        //{
+        if (_isOnGround)
+        {            //Move left or right
+            leftRightMove = Input.GetAxis("Horizontal");
 
-
-        //    transform.Translate(Vector3.forward * _speed * Time.deltaTime * backForwardMove);
-        //    animator.SetFloat("RunBackForward", backForwardMove);
-        //    animator.SetBool("isRunningBackForward", backForwardMove > 0 || backForwardMove < 0);
-
-        //    //Move left or right
-        //    leftRightMove = Input.GetAxis("Horizontal");
-        //    transform.Translate(Vector3.right * Time.deltaTime * _speed * leftRightMove);
-        //    animator.SetFloat("runLeftRight", leftRightMove);
-        //    animator.SetBool("isRunningLeftRight", leftRightMove > 0 || leftRightMove < 0);
-
-        //}
-
-
-        transform.Translate(Vector3.forward * _speed * Time.deltaTime * backForwardMove);
-        animator.SetFloat("RunBackForward", backForwardMove);
-        animator.SetBool("isRunningBackForward", backForwardMove > 0 || backForwardMove < 0);
-
-        //Move left or right
-        leftRightMove = Input.GetAxis("Horizontal");
-        transform.Translate(Vector3.right * Time.deltaTime * _speed * leftRightMove);
-        animator.SetFloat("runLeftRight", leftRightMove);
-        animator.SetBool("isRunningLeftRight", leftRightMove > 0 || leftRightMove < 0);
-
-        if (Input.GetKeyDown(KeyCode.Space) && _isOnGround)
-        {
-            playerRigitbody.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
-            _isOnGround = false;
-            animator.SetBool("isJumping", true);
-        }
-
-        animator.SetBool("isAttacking", Input.GetKeyDown(KeyCode.Mouse0));
-
-        if (isPlayingMiniGame)
-        {
-
-            if (basketball_MiniGame)
+            if (!checkForTreasure(backForwardMove, leftRightMove))
             {
-                basketball_MiniGame.PlayingGame(this);
+                
+                transform.Translate(Vector3.forward * _speed * Time.deltaTime * backForwardMove);
+                animator.SetFloat("RunBackForward", backForwardMove);
+                animator.SetBool("isRunningBackForward", backForwardMove > 0 || backForwardMove < 0);
 
+
+              
+                transform.Translate(Vector3.right * Time.deltaTime * _speed * leftRightMove);
+                animator.SetFloat("runLeftRight", leftRightMove);
+                animator.SetBool("isRunningLeftRight", leftRightMove > 0 || leftRightMove < 0);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                playerRigitbody.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
+                _isOnGround = false;
+                animator.SetBool("isJumping", true);
+                flatMovementforJump = transform.forward * backForwardMove * _speed + transform.right * leftRightMove * _speed;
+                Debug.DrawRay(transform.position, flatMovementforJump * 10, Color.red,5);
+
+
+            }
+
+            animator.SetBool("isAttacking", Input.GetKeyDown(KeyCode.Mouse0));
+
+            if (isPlayingMiniGame)
+            {
+
+                if (basketball_MiniGame)
+                {
+                    basketball_MiniGame.PlayingGame(this);
+
+                }
+                else
+                {
+                    basketball_MiniGame = FindAnyObjectByType<Basketball_miniGame>();
+
+                }
             }
             else
             {
-                basketball_MiniGame = FindAnyObjectByType<Basketball_miniGame>();
-            
+
+                basketball_MiniGame = null;
+            }
+
+            if(isStartCollecttreasure)
+            {
+                if(Input.GetKeyDown(KeyCode.F))
+                {
+                    treasureController.GetReward();
+                }
             }
         }
         else
         {
-     
-            basketball_MiniGame = null;
+            // in the air
+
+            transform.position += (flatMovementforJump * Time.deltaTime);
         }
     }
 
+    private bool checkForTreasure(float backForwardMove, float leftRightMove)
+    {   if ((backForwardMove == 0) && (leftRightMove == 0)) return false;
+
+        float dirZ =( backForwardMove > 0 )? 1 : -1;
+        dirZ = (backForwardMove == 0) ? 0 : dirZ;
+        float dirX = (leftRightMove > 0) ? 1 : -1;
+        dirX = (leftRightMove ==0)? 0 : dirX;
+
+        print(dirZ);
+        Collider[] allColls = Physics.OverlapSphere(transform.position + dirZ * transform.forward + dirX * transform.right, 0.1f);
+        foreach (Collider c in allColls)
+        {
+            print("ff");
+            if (c.gameObject.name == "Treasure")
+            {
+                print("Treasure in front");
+                
+                if (treasureController != null)
+                {
+                    treasureController.TreasureOpen(this);
+                }
+                return true;
+            }
+        }
+        
+
+        return false;
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
+        print("col");
         if (collision.collider.gameObject.name == "Treasure")
         {
             print("ouch");
@@ -345,5 +379,10 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     {
         my_Ball = ballController;
         my_Ball.throwMe(transform.forward + Vector3.up);
+    }
+
+    public void CollectTreasure(bool isCollecting)
+    {
+        isStartCollecttreasure = isCollecting;
     }
 }
