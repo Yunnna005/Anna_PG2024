@@ -18,6 +18,7 @@ TagManager:
   - MiniGame
   - Ball
   - Basketball_basket
+  - Treasure
   layers:
   - Default
   - TransparentFX

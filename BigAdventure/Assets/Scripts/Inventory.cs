@@ -41,7 +41,23 @@ public class Inventory : MonoBehaviour
 
     public void RemoveItem(Item item) 
     {
-        inventorySlots.Remove(item);
+        int qty;
+        foreach(var Item in inventorySlots)
+        {
+            if(Item.Key == item )
+            {
+                qty = Item.Value;
+                if (qty>1)
+                {
+                    inventorySlots[item]--;
+                }
+                else
+                {
+                    inventorySlots.Remove(item);
+                    // Delete UI
+                }
+            }  
+        }
     }
 
     public void ListItems()
@@ -85,6 +101,32 @@ public class Inventory : MonoBehaviour
             }
         }
 
+        return null;
+    }
+
+    public bool CheckItem(string check_itemName)
+    {
+        foreach(Item item in inventorySlots.Keys)
+        {
+            if(item.itemName == check_itemName)
+            {
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
+    public Item FindItem(string item_name)
+    {
+        foreach (Item item in inventorySlots.Keys)
+        {
+            if (item.itemName == item_name)
+            {
+                return item;
+            }
+            return null;
+        }
         return null;
     }
 }

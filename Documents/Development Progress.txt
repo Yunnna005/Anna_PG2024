@@ -17,3 +17,4 @@
 08/03/24 The Basketball Mini Game is done, needs to fix a fix when player doesnot finish the game but left the game area.
 12/03/24 Start working with Treasure box. Add displayed player level.
 15/03/24 Still working on Treasure box system. Changed Treasure system(withoud canvas). Fixed collitions.
+18/03/24 Changed fixed collitions. Still working on Treasure system. Working on deleting UI after the item removed from the inventorySlots.
