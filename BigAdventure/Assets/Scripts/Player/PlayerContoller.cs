@@ -119,7 +119,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
         inventory = GetComponent<Inventory>();
         level_text.text = "Level: 0";
 
-        treasureController = FindAnyObjectByType<TreasureController>();
+       
     }
     // Update is called once per frame
     void Update()
@@ -184,12 +184,10 @@ public class PlayerContoller : MonoBehaviour, IPlayer
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
-
                 if (inventory.CheckItem("Key"))
                 {
-                    Item key = inventory.FindItem("Key");
-                    inventory.RemoveItem(key);
-                    treasureController.GetReward();
+                    inventory.RemoveItem(inventory.FindItem("Key"));
+                    treasureController.DestroyTreasureChest();
                 }
                 else
                 {
@@ -297,12 +295,14 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     private void OnCollisionEnter(Collision collision)
     {
 
-        if (collision.collider.gameObject.CompareTag("Treasure"))
+        TreasureController chestInFrontOfMe = collision.gameObject.GetComponent<TreasureController>();
+
+
+        if (chestInFrontOfMe)
         {
- 
+            treasureController = chestInFrontOfMe;
             treasureController.TreasureOpen(this);
         }
-        
         if (collision.gameObject.CompareTag("Ground"))
         {
             _isOnGround = true;
