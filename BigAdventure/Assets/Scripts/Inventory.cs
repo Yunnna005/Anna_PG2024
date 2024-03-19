@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
@@ -41,22 +42,22 @@ public class Inventory : MonoBehaviour
 
     public void RemoveItem(Item item) 
     {
-        int qty;
-        foreach(var Item in inventorySlots)
+        int qty = inventorySlots[item];
+        if (qty > 1)
         {
-            if(Item.Key == item )
+            inventorySlots[item]--;
+            ListItems();
+        }
+        
+        if(qty == 1)
+        {
+            inventorySlots.Remove(item);
+            GameObject itemSlot = FindGameObjectByItem(item);
+            if (itemSlot != null)
             {
-                qty = Item.Value;
-                if (qty>1)
-                {
-                    inventorySlots[item]--;
-                }
-                else
-                {
-                    inventorySlots.Remove(item);
-                    // Delete UI
-                }
-            }  
+                Destroy(itemSlot);
+            }
+            ListItems();
         }
     }
 
@@ -106,26 +107,31 @@ public class Inventory : MonoBehaviour
 
     public bool CheckItem(string check_itemName)
     {
-        foreach(Item item in inventorySlots.Keys)
+        foreach (Item item in inventorySlots.Keys)
         {
-            if(item.itemName == check_itemName)
+            if (item.itemName == check_itemName)
             {
                 return true;
             }
-            return false;
         }
+
         return false;
     }
 
     public Item FindItem(string item_name)
     {
-        foreach (Item item in inventorySlots.Keys)
+        return inventorySlots.Keys.FirstOrDefault(item => item.itemName == item_name);
+    }
+
+    private GameObject FindGameObjectByItem(Item item)
+    {
+        foreach (Transform child in ItemContent.transform)
         {
-            if (item.itemName == item_name)
+            Text itemName = child.Find("ItemName").GetComponent<Text>();
+            if (itemName != null && itemName.text == item.itemName)
             {
-                return item;
+                return child.gameObject;
             }
-            return null;
         }
         return null;
     }
