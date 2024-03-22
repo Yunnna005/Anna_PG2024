@@ -9,7 +9,8 @@ public class TreasureController : MonoBehaviour
 {
     public Text text;
     public GameObject diamondPrefab;
-    public ParticleSystem effect;
+    public GameObject particle;
+    ParticleSystem effect;
 
     Vector3 spawnPosition;
     float position_y_diamond = 0.6f;
@@ -23,30 +24,22 @@ public class TreasureController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        effect.Stop();
         text.enabled = false;
-        text.text = "Press F to get the tresure";
+
+        effect = particle.GetComponent<ParticleSystem>();
+        effect.Stop();
     }
 
     private void Update()
     {
-        if (isGetReward)
-        {
-            targetTime -= Time.deltaTime;
-            if (targetTime < 0)
-            {
-                GetReward();
-                Destroy(gameObject);
 
-            }
-        }
 
     }
 
     public void TreasureOpen(PlayerContoller player)
     {
         text.enabled = true;
-        player.CollectTreasure(true); 
+        player.CollectTreasure(true);
     }
 
     public void DestroyTreasureChest()
@@ -54,10 +47,8 @@ public class TreasureController : MonoBehaviour
         print("DTC");
         text.enabled = false;
         isGetReward = true;
-
         effect.Play();
-
-
+        GetReward();
     }
 
     public void GetReward()
@@ -68,6 +59,10 @@ public class TreasureController : MonoBehaviour
             spawnPosition = new Vector3(transform.position.x + randomNum, position_y_diamond, transform.position.z + randomNum);
             Instantiate(diamondPrefab, spawnPosition, Quaternion.Euler(-90f, 0f, 0f));
             maxReward++;
+        }
+        if (maxReward == 3)
+        {
+            Destroy(gameObject, 0.5f);
         }
         print("I got reward");
     }
@@ -82,7 +77,7 @@ public class TreasureController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            
+            text.text = "Press F to get the tresure";
             distance = Vector3.Distance(transform.position, collision.transform.position);
             if (distance <= radius)
             {

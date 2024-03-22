@@ -19,3 +19,4 @@
 15/03/24 Still working on Treasure box system. Changed Treasure system(withoud canvas). Fixed collitions.
 18/03/24 Changed fixed collitions. Still working on Treasure system. Working on deleting UI after the item removed from the inventorySlots Dictionary.
 19/03/24 Fixed problem with Treasure chests. Start working on effect for it.
+22/03/24 Treasure Chest particleSystem is done, fixed some errors. Created LevelUp animation for player and adjusted.

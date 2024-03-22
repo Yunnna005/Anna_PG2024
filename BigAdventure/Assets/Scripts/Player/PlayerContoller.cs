@@ -15,6 +15,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     public Scrollbar healthBar;
     public Scrollbar levelBar;
     public Text level_text;
+    public GameObject particle;
 
     float leftRightMove;
     float backForwardMove;
@@ -22,7 +23,9 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     private float _jumpForce = 300.0f;
     private bool _isOnGround = true;
     private float _gravityModifier = 1.2f;
-    float pickUpTimer;
+    float timer;
+    float timerLevelUp;
+    float LevelUpAnimationTime = 2.65f;
     float PickUPAnimationTime = 1.50f;
     float playerHealth = 1.0f;
     int playerExpreienceLevel = 0;
@@ -39,6 +42,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     Inventory inventory;
     Item pickupItem;
     TreasureController treasureController;
+    ParticleSystem particle_effect;
 
 
     Basketball_miniGame basketball_MiniGame;
@@ -71,6 +75,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
                 levelProgress -= levelTarget;
                 levelTarget = PlayerLevelSetandCheck(playerExpreienceLevel);
                 level_text.text = "Level: " + PlayerLevelSetLevel(levelTarget);
+                PlayLevelUpgrageEffect();
             }
 
             levelBarSize =  (float)levelProgress/levelTarget;
@@ -119,14 +124,17 @@ public class PlayerContoller : MonoBehaviour, IPlayer
         inventory = GetComponent<Inventory>();
         level_text.text = "Level: 0";
 
-       
+       particle_effect = particle.GetComponent<ParticleSystem>();
+       particle_effect.Stop();
     }
     // Update is called once per frame
     void Update()
     {
         PlayerMovements();
-        pickUpTimer -= Time.deltaTime;
-        if (pickUpTimer <= 0)
+        timer -= Time.deltaTime;
+        timerLevelUp -= Time.deltaTime;
+        print(timerLevelUp);
+        if (timer <= 0)
         {
             animator.SetBool("isPickUp", false);
         }
@@ -138,7 +146,12 @@ public class PlayerContoller : MonoBehaviour, IPlayer
             panelGameOver.SetActive(true);
         }
 
-        lastPosition = transform.position; ;
+        //lastPosition = transform.position; 
+
+        if (timerLevelUp <= 0)
+        {
+            animator.SetBool("isLevelUp", false);
+        }
     }
 
     private void PlayerMovements()
@@ -365,7 +378,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     void startPickUP()
     {
         animator.SetBool("isPickUp", true);
-        pickUpTimer = PickUPAnimationTime;
+        timer = PickUPAnimationTime;
 
     }
 
@@ -436,5 +449,12 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     public void CollectTreasure(bool isCollecting)
     {
         isStartCollecttreasure = isCollecting;
+    }
+
+    public void PlayLevelUpgrageEffect()
+    {
+        animator.SetBool("isLevelUp", true);
+        particle_effect.Play();
+        timerLevelUp = LevelUpAnimationTime;
     }
 }
