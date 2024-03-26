@@ -52,7 +52,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     private Vector3 lastPosition;
     Vector3 flatMovementforJump;
 
-    float _rotationSpeed = 2.5f;
+    float _rotationSpeed = 3f;
     public Camera _mainCamera;
 
     float PlayerHealth {  get { return playerHealth; }
