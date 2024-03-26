@@ -13,7 +13,7 @@ public class TreasureController : MonoBehaviour
     ParticleSystem effect;
 
     Vector3 spawnPosition;
-    float position_y_diamond = 0.6f;
+    float position_y_diamond = 1.6f;
     int maxReward = 0;
     float radius = 5;
     float distance;
@@ -54,7 +54,7 @@ public class TreasureController : MonoBehaviour
     {
         while (maxReward != 3)
         {
-            int randomNum = UnityEngine.Random.Range(-1, 3);
+            float randomNum = UnityEngine.Random.Range(-.5f, 0.5f);
             spawnPosition = new Vector3(transform.position.x + randomNum, position_y_diamond, transform.position.z + randomNum);
             Instantiate(diamondPrefab, spawnPosition, Quaternion.Euler(-90f, 0f, 0f));
             maxReward++;
