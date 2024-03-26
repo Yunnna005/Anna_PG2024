@@ -4,36 +4,33 @@ using UnityEngine;
 
 public class CameraConroller : MonoBehaviour
 {
-    //ChatGPT helped with logic. The code is mine.
-
-    public GameObject player;
-    public Camera camera_view1;
-    public Camera camera_view3;
+    public GameObject camera_view1;
+    public GameObject camera_view3;
 
     private Vector3 _orbit_camera_view1;
     private Vector3 _orbit_camera_view3;
-    private float _turnSpeed = 2.0f;
+    private float _turnSpeed = 1.0f;
 
     private float view1_Y = 1.053f;
     private float view1_Z = 0.217f;
     private float view3_Y = 2.3f;
     private float view3_Z = -2.8f;
-    // Start is called before the first frame update
+
     void Start()
     {
-        camera_view1.enabled = false;
+        camera_view1.SetActive(false);
 
-        _orbit_camera_view1 = new Vector3(player.transform.position.x, player.transform.position.y + view1_Y, player.transform.position.z + view1_Z);
-        _orbit_camera_view3 = new Vector3(player.transform.position.x, player.transform.position.y + view3_Y, player.transform.position.z + view3_Z);
+        _orbit_camera_view1 = new Vector3(0, view1_Y, view1_Z);
+        _orbit_camera_view3 = new Vector3(0, view3_Y, view3_Z);
     }
 
-    // Update is called once per frame
     void LateUpdate()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            SwitchToCamera1();   
-        }else if (Input.GetKeyDown(KeyCode.Alpha3))
+            SwitchToCamera1();
+        }
+        else if (Input.GetKeyDown(KeyCode.M))
         {
             SwitchToCamera3();
         }
@@ -43,19 +40,18 @@ public class CameraConroller : MonoBehaviour
 
     void SwitchToCamera1()
     {
-        camera_view1.enabled = true;
-        camera_view3.enabled = false;
+        camera_view1.SetActive(true);
+        camera_view3.SetActive(false);
     }
 
     void SwitchToCamera3()
     {
-        camera_view1.enabled = false;
-        camera_view3.enabled = true;
+        camera_view1.SetActive(false);
+        camera_view3.SetActive(true);
     }
 
     void UpdateCameraPosition()
     {
-
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 
@@ -68,8 +64,7 @@ public class CameraConroller : MonoBehaviour
         camera_view3.transform.Rotate(Vector3.right, -mouseY * _turnSpeed);
 
         // Update the camera positions relative to the player
-        camera_view1.transform.position = player.transform.position + _orbit_camera_view1;
-        camera_view3.transform.position = player.transform.position + _orbit_camera_view3;
-
+        camera_view1.transform.position = transform.position + transform.TransformDirection(_orbit_camera_view1);
+        camera_view3.transform.position = transform.position + transform.TransformDirection(_orbit_camera_view3);
     }
 }

@@ -52,6 +52,9 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     private Vector3 lastPosition;
     Vector3 flatMovementforJump;
 
+    float _rotationSpeed = 2.5f;
+    public Camera _mainCamera;
+
     float PlayerHealth {  get { return playerHealth; }
         set
         {
@@ -159,6 +162,18 @@ public class PlayerContoller : MonoBehaviour, IPlayer
         //Move Back or Forward
         backForwardMove = Input.GetAxis("Vertical");
 
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+
+        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+
+        if (direction.magnitude >= 0.1f)
+        {
+            float targetAngle = Mathf.Atan2(_mainCamera.transform.forward.x, _mainCamera.transform.forward.z) * Mathf.Rad2Deg;
+            Quaternion targetRotation = Quaternion.Euler(0f, targetAngle, 0f);
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
+        }
 
         transform.Translate(Vector3.forward * _speed * Time.deltaTime * backForwardMove);
         animator.SetFloat("RunBackForward", backForwardMove);

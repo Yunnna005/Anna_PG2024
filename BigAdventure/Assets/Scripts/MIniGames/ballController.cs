@@ -6,7 +6,7 @@ public class ballController : MonoBehaviour
 {
 
     Rigidbody rb;
-    float force = 10f;
+    float force = 8f;
     Basketball_miniGame basketball_MiniGameScript;
 
     private void Start()

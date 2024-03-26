@@ -96,6 +96,10 @@ public class Basketball_miniGame : MonoBehaviour, IPlayGame
         }
     }
 
+    private void OnCollisionExit(Collision collision) {
+        canvas.SetActive(false);
+    }
+
     public void BasketballMiniGame()
     {
 

@@ -19,7 +19,7 @@ public class TreasureController : MonoBehaviour
     float distance;
 
     public float targetTime = 1.0f;
-    private bool isGetReward = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -46,7 +46,6 @@ public class TreasureController : MonoBehaviour
     {
         print("DTC");
         text.enabled = false;
-        isGetReward = true;
         effect.Play();
         GetReward();
     }
