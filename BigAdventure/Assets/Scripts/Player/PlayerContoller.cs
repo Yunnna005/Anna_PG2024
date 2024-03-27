@@ -55,6 +55,8 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     float _rotationSpeed = 3f;
     public Camera _mainCamera;
 
+    Vector3 previousPosition;
+
     float PlayerHealth {  get { return playerHealth; }
         set
         {
@@ -136,7 +138,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
         PlayerMovements();
         timer -= Time.deltaTime;
         timerLevelUp -= Time.deltaTime;
-        print(timerLevelUp);
+        //print(timerLevelUp);
         if (timer <= 0)
         {
             animator.SetBool("isPickUp", false);
@@ -155,6 +157,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
         {
             animator.SetBool("isLevelUp", false);
         }
+        previousPosition = transform.position;
     }
 
     private void PlayerMovements()
@@ -354,29 +357,35 @@ public class PlayerContoller : MonoBehaviour, IPlayer
 
     private void OnTriggerEnter(Collider other)
     {
+
         ItemController itemController = other.GetComponent<ItemController>();
-        pickupItem = itemController.Item;
+        if(itemController != null)
+        {
+            pickupItem = itemController.Item;
+
+            if (pickupItem.damage)
+            {
+                ApplyDamage(pickupItem.itemValue);
+            }
+            else if (pickupItem.heal)
+            {
+                ApplyHeal(pickupItem.itemValue);
+
+            }
+            else if (pickupItem.progress)
+            {
+                ApplyLevelProgress((int)pickupItem.itemValue);
+            }
+
+
+            Destroy(other.gameObject);
+        }
 
         if (other.CompareTag("ItemToCollect"))
         {
             inventory.AddItem(pickupItem);
+            Destroy(other.gameObject);
         }  
-
-
-        if (pickupItem.damage)
-        {
-            ApplyDamage(pickupItem.itemValue);
-        }
-        else if (pickupItem.heal)
-        {
-            ApplyHeal(pickupItem.itemValue);
-
-        }else if (pickupItem.progress)
-        {
-            ApplyLevelProgress((int)pickupItem.itemValue);
-        }
-
-        Destroy(other.gameObject);
     }
     internal void DisArm()
     {

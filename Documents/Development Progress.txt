@@ -20,3 +20,5 @@
 18/03/24 Changed fixed collitions. Still working on Treasure system. Working on deleting UI after the item removed from the inventorySlots Dictionary.
 19/03/24 Fixed problem with Treasure chests. Start working on effect for it.
 22/03/24 Treasure Chest particleSystem is done, fixed some errors. Created LevelUp animation for player and adjusted.
+26/03/24 Start working oon world.
+27/03/24 Still working on world. Terrain is done. Made some tree prefabs and 2 villages, 1 castel, and working on beach area. Created one mini game on beach area. Created level walls.
