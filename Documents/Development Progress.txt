@@ -22,3 +22,4 @@
 22/03/24 Treasure Chest particleSystem is done, fixed some errors. Created LevelUp animation for player and adjusted.
 26/03/24 Start working oon world.
 27/03/24 Still working on world. Terrain is done. Made some tree prefabs and 2 villages, 1 castel, and working on beach area. Created one mini game on beach area. Created level walls.
+03/04/24 Almost finished world. Add skyboxes. Asia area. Start working on teleports.

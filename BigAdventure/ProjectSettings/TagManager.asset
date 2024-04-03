@@ -20,6 +20,7 @@ TagManager:
   - Basketball_basket
   - Treasure
   - Water
+  - Water2
   layers:
   - Default
   - TransparentFX

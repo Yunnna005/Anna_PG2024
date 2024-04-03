@@ -14,5 +14,7 @@ public class waterController : MonoBehaviour
         {
             player.transform.position = spawnPosition;
         }
+
+        
     }
 }

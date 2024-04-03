@@ -5,7 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
+    public Material skyboxDay;
 
+    private void Start()
+    {
+        RenderSettings.skybox = skyboxDay;
+    }
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); //need to be fix to load start scene
