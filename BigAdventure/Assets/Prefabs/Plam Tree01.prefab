@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6605561489333054044}
   - component: {fileID: 8957479771309252246}
   - component: {fileID: -4916811051636958919}
+  - component: {fileID: 5490176147844630195}
   m_Layer: 0
   m_Name: Plam Tree01
   m_TagString: Untagged
@@ -101,13 +102,27 @@ LODGroup:
   - screenRelativeHeight: 0.6
     fadeTransitionWidth: 0
     renderers:
-    - renderer: {fileID: 8957479771309252246}
+    - renderer: {fileID: 9180664661608991909, guid: e2346c1679fff42b89171240bc31918b, type: 3}
   - screenRelativeHeight: 0.3
     fadeTransitionWidth: 0
     renderers:
-    - renderer: {fileID: 8957479771309252246}
+    - renderer: {fileID: 9180664661608991909, guid: e2346c1679fff42b89171240bc31918b, type: 3}
   - screenRelativeHeight: 0.1
     fadeTransitionWidth: 0
     renderers:
-    - renderer: {fileID: 8957479771309252246}
+    - renderer: {fileID: 9180664661608991909, guid: e2346c1679fff42b89171240bc31918b, type: 3}
   m_Enabled: 1
+--- !u!64 &5490176147844630195
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7444344719461400387}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -3982998660465157513, guid: 96999d95065c3428fb46394fb9b4e413, type: 3}

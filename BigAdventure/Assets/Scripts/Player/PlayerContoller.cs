@@ -57,6 +57,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
 
     Vector3 previousPosition;
 
+
     float PlayerHealth {  get { return playerHealth; }
         set
         {
@@ -385,7 +386,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
         {
             inventory.AddItem(pickupItem);
             Destroy(other.gameObject);
-        }  
+        }
     }
     internal void DisArm()
     {
