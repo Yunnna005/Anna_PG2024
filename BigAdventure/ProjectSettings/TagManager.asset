@@ -21,6 +21,7 @@ TagManager:
   - Treasure
   - Water
   - Water2
+  - NPC
   layers:
   - Default
   - TransparentFX

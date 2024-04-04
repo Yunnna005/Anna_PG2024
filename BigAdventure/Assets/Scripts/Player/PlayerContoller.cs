@@ -58,7 +58,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
 
     Vector3 previousPosition;
 
-
+    NPC_Controller npc_Controller;
     float PlayerHealth {  get { return playerHealth; }
         set
         {
@@ -261,6 +261,15 @@ public class PlayerContoller : MonoBehaviour, IPlayer
             if (basketball_MiniGame)
             {
                 basketball_MiniGame.ClearMessage();
+            }
+        }
+
+        if (collision.gameObject.CompareTag("NPC"))
+        {
+            NPC_Controller npc_Controller = collision.gameObject.GetComponent<NPC_Controller>();
+            if (npc_Controller != null)
+            {
+                npc_Controller.StartDialogue();
             }
         }
     }
