@@ -34,7 +34,7 @@ public class ballController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("MiniGame"))
+        if (collision.gameObject.CompareTag("MiniGame") || collision.gameObject.CompareTag("Ground"))
         {
             Destroy(gameObject.transform.parent.gameObject);
         }

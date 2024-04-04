@@ -6,9 +6,9 @@ public class PlatformAsiaController : MonoBehaviour
 {
     public Material skyboxNight;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             RenderSettings.skybox = skyboxNight;
         }
