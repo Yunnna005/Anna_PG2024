@@ -23,4 +23,4 @@
 26/03/24 Start working oon world.
 27/03/24 Still working on world. Terrain is done. Made some tree prefabs and 2 villages, 1 castel, and working on beach area. Created one mini game on beach area. Created level walls.
 03/04/24 Almost finished world. Add skyboxes. Asia area. Start working on teleports.
-04/04/24 Finished the design of the map. Finished all teleports. A little bit fixed miniGame basketball game script. Start working on NPCs.
+04/04/24 Finished the design of the map. Finished all teleports. A little bit fixed miniGame basketball game script. Start working on NPCs. Made 2 scripts for NPCs: NPC_Controller and DialogueManager. Added fog.

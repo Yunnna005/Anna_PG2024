@@ -9,14 +9,13 @@ public class TeleportVillageToAsiaController : MonoBehaviour
     //Teleport to the Asia area
     Vector3 spawnPosition = new Vector3(371.48f, 3.039f, -115.36f);
 
-    MeshCollider MeshCollider;
-    SphereCollider SphereCollider;
+    MeshCollider meshCollider;
+    SphereCollider sphereCollider;
 
-    public Text text;
     private void Start()
     {
-        MeshCollider = GetComponent<MeshCollider>();
-        SphereCollider = GetComponent<SphereCollider>();
+        meshCollider = GetComponent<MeshCollider>();
+        sphereCollider = GetComponent<SphereCollider>();
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -25,20 +24,12 @@ public class TeleportVillageToAsiaController : MonoBehaviour
         {
             if(player.playerLevel == 5)
             {
-                SphereCollider.enabled = false;
-                MeshCollider.enabled = true;
+                sphereCollider.enabled = false;
+                meshCollider.enabled = true;
                 player.transform.position = spawnPosition;
             }
-            else
-            {
-                text.enabled = true;
-                text.text = "You didn't get level 5";
-            }
+
         }
     }
 
-    private void OnCollisionExit(Collision collision)
-    {
-        text.enabled = false;
-    }
 }
