@@ -54,6 +54,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
 
     float _rotationSpeed = 3f;
     public Camera _mainCamera;
+    public int playerLevel;
 
     Vector3 previousPosition;
 
@@ -81,6 +82,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
                 levelProgress -= levelTarget;
                 levelTarget = PlayerLevelSetandCheck(playerExpreienceLevel);
                 level_text.text = "Level: " + PlayerLevelSetLevel(levelTarget);
+                playerLevel = PlayerLevelSetLevel(levelTarget);
                 PlayLevelUpgrageEffect();
             }
 
@@ -187,6 +189,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
         transform.Translate(Vector3.right * Time.deltaTime * _speed * leftRightMove);
         animator.SetFloat("runLeftRight", leftRightMove);
         animator.SetBool("isRunningLeftRight", leftRightMove > 0 || leftRightMove < 0);
+
         if (Input.GetKeyDown(KeyCode.Space) && _isOnGround)
         {
             playerRigitbody.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
@@ -194,6 +197,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
             animator.SetBool("isJumping", true);
         }
         animator.SetBool("isAttacking", Input.GetKeyDown(KeyCode.Mouse0));
+
         if (isPlayingMiniGame)
         {
             if (basketball_MiniGame)
@@ -227,102 +231,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
                 }
             }
         }
-
-        //if (_isOnGround)
-        //{            //Move left or right
-        //    leftRightMove = Input.GetAxis("Horizontal");
-
-        //    if (!checkForTreasure(backForwardMove, leftRightMove))
-        //    {
-
-        //        transform.Translate(Vector3.forward * _speed * Time.deltaTime * backForwardMove);
-        //        animator.SetFloat("RunBackForward", backForwardMove);
-        //        animator.SetBool("isRunningBackForward", backForwardMove > 0 || backForwardMove < 0);
-
-
-
-        //        transform.Translate(Vector3.right * Time.deltaTime * _speed * leftRightMove);
-        //        animator.SetFloat("runLeftRight", leftRightMove);
-        //        animator.SetBool("isRunningLeftRight", leftRightMove > 0 || leftRightMove < 0);
-        //    }
-
-        //    if (Input.GetKeyDown(KeyCode.Space))
-        //    {
-        //        playerRigitbody.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
-        //        _isOnGround = false;
-        //        animator.SetBool("isJumping", true);
-        //        flatMovementforJump = transform.forward * backForwardMove * _speed + transform.right * leftRightMove * _speed;
-        //        Debug.DrawRay(transform.position, flatMovementforJump * 10, Color.red,5);
-
-
-        //    }
-
-        //    animator.SetBool("isAttacking", Input.GetKeyDown(KeyCode.Mouse0));
-
-        //    if (isPlayingMiniGame)
-        //    {
-
-        //        if (basketball_MiniGame)
-        //        {
-        //            basketball_MiniGame.PlayingGame(this);
-
-        //        }
-        //        else
-        //        {
-        //            basketball_MiniGame = FindAnyObjectByType<Basketball_miniGame>();
-
-        //        }
-        //    }
-        //    else
-        //    {
-
-        //        basketball_MiniGame = null;
-        //    }
-
-        //    if(isStartCollecttreasure)
-        //    {
-        //        if(Input.GetKeyDown(KeyCode.F))
-        //        {
-        //            treasureController.GetReward();
-        //        }
-        //    }
-        //}
-        //else
-        //{
-        //    // in the air
-
-        //    transform.position += (flatMovementforJump * Time.deltaTime);
-        //}
     }
-
-    //private bool checkForTreasure(float backForwardMove, float leftRightMove)
-    //{   if ((backForwardMove == 0) && (leftRightMove == 0)) return false;
-
-    //    float dirZ =( backForwardMove > 0 )? 1 : -1;
-    //    dirZ = (backForwardMove == 0) ? 0 : dirZ;
-    //    float dirX = (leftRightMove > 0) ? 1 : -1;
-    //    dirX = (leftRightMove ==0)? 0 : dirX;
-
-    //    print(dirZ);
-    //    Collider[] allColls = Physics.OverlapSphere(transform.position + dirZ * transform.forward + dirX * transform.right, 0.1f);
-    //    foreach (Collider c in allColls)
-    //    {
-    //        print("ff");
-    //        if (c.gameObject.name == "Treasure")
-    //        {
-    //            print("Treasure in front");
-
-    //            if (treasureController != null)
-    //            {
-    //                treasureController.TreasureOpen(this);
-    //            }
-    //            return true;
-    //        }
-    //    }
-
-
-    //    return false;
-    //}
 
     private void OnCollisionEnter(Collision collision)
     {

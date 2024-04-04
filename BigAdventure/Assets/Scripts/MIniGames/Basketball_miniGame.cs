@@ -36,7 +36,7 @@ public class Basketball_miniGame : MonoBehaviour, IPlayGame
         switch (isCurrently)
         {
             case GameState.inActive:
-
+                canvas_text.text = "Basketball mini game.\r\n\rPress \"Start Game\" to start.";
                 break;
 
             case GameState.startingMessage:
@@ -44,7 +44,7 @@ public class Basketball_miniGame : MonoBehaviour, IPlayGame
 
                 if (Input.GetKeyDown(KeyCode.R))
                 {
-                  
+
                     isCurrently = GameState.Playing;
                     canvas.SetActive(false);
 
@@ -63,6 +63,7 @@ public class Basketball_miniGame : MonoBehaviour, IPlayGame
                 ActiveCanvas();
                 break;
             case GameState.Finish:
+                canvas_text.text = "You have already played this game.";
                 break;
         }
 
@@ -73,20 +74,16 @@ public class Basketball_miniGame : MonoBehaviour, IPlayGame
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
-        {
-       
-            canvas.SetActive(true);
+        {        
+
+            thePlayer.PlayMode(true);
 
             if(isCurrently == GameState.Finish)
             {
-                canvas_text.text = "You have already played this game.";
+                canvas.SetActive(true);
+            }
 
-            }
-            else
-            {
-                thePlayer.PlayMode(true);
-                canvas_text.text = "Basketball mini game.\r\n\rPress \"Start Game\" to start.";
-            }
+            canvas.SetActive(false);
 
         }
         else
@@ -151,7 +148,7 @@ public class Basketball_miniGame : MonoBehaviour, IPlayGame
     public void Reward(int maxReward)
     {
         int randomPosition = UnityEngine.Random.Range(-4, 7);
-        Vector3 spawnPosition = this.transform.position + new Vector3((float)randomPosition, 0f, (float)randomPosition) + Vector3.up * 0.5f;
+        Vector3 spawnPosition = player.transform.position + new Vector3(randomPosition, 0f, randomPosition) + Vector3.up * 0.5f;
 
         Instantiate(diamondPrefab, spawnPosition, Quaternion.Euler(-90f, 0f, 0f));
         max_Reward++;
