@@ -9,8 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce1a08d178ce7164c8fa30e87d91062a, type: 3}
-  m_Name: SellApple
+  m_Script: {fileID: 11500000, guid: 64055065dbc0f1d4ba306f0ffadfdcb2, type: 3}
+  m_Name: Bone
   m_EditorClassIdentifier: 
-  itemName: Apple
-  qtyToSell: 10
+  id: 9
+  itemName: Bone
+  description: You can get it from enemies
+  itemValue: 1
+  damage: 0
+  heal: 0
+  progress: 0
+  icon: {fileID: 21300000, guid: fa96cf8ef213c4d9f857d76b486abb9b, type: 3}
