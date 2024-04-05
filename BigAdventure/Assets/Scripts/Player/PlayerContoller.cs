@@ -33,13 +33,13 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     int levelTarget = 100;
     float levelBarSize = 0f;
     bool isPlayingMiniGame = false;
-    bool isStartCollecttreasure= false;
+    bool isStartCollecttreasure = false;
 
     Rigidbody playerRigitbody;
     Animator animator;
     Text healthPercentage;
     Text levelPercentage;
-    Inventory inventory;
+    internal Inventory inventory;
     Item pickupItem;
     TreasureController treasureController;
     ParticleSystem particle_effect;
@@ -266,12 +266,17 @@ public class PlayerContoller : MonoBehaviour, IPlayer
 
         if (collision.gameObject.CompareTag("NPC"))
         {
-            NPC_Controller npc_Controller = collision.gameObject.GetComponent<NPC_Controller>();
+            npc_Controller = collision.gameObject.GetComponent<NPC_Controller>();
             if (npc_Controller != null)
             {
                 npc_Controller.StartDialogue();
             }
         }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        npc_Controller = null;
     }
 
     private void OnTriggerEnter(Collider other)

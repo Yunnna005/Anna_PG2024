@@ -14,6 +14,13 @@ public class NPC_Controller : MonoBehaviour
     private float lastKeyPressTime = 0f;
     private float keyPressCooldown = 1.5f;
     private bool isStarted = false;
+    bool isSellingDiamonds = false;
+
+    SellController sellController;
+    string sellingItemName;
+    int sellingItemQty;
+
+    PlayerContoller player;
 
     void Start()
     {
@@ -23,7 +30,9 @@ public class NPC_Controller : MonoBehaviour
     public void StartDialogue()
     {
         isStarted = true;
+        currentLineIndex = 0;
         isCurrent = GameState.Start;
+
     }
 
     private void Update()
@@ -43,6 +52,7 @@ public class NPC_Controller : MonoBehaviour
                     }
                     break;
                 case GameState.Talking:
+                    isSellingDiamonds = true;
                     if (Input.GetKeyDown(KeyCode.T) && CanPressKey())
                     {
                         if (currentLineIndex < dialogLines.Length - 1)
@@ -74,11 +84,59 @@ public class NPC_Controller : MonoBehaviour
     }
     private void OnCollisionExit(Collision collision)
     {
+        isStarted = false;
         dialogueManager.HideText();
     }
     private void OnCollisionEnter(Collision collision)
     {
+        player = collision.gameObject.GetComponent<PlayerContoller>();
         dialogueManager.ShowText();
     }
 
+    public void onPointerClickEventTrigger()
+    {
+        if(player != null)
+        {
+            print("I want to sell");
+            if (isSellingDiamonds){
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit))
+                {
+                    if (hit.collider)
+                    {
+                        sellController = hit.collider.gameObject.GetComponent<SellController>();
+                        if (sellController.itemToSell != null)
+                        {
+                            sellingItemName = sellController.itemToSell.itemName;
+                            sellingItemQty = sellController.itemToSell.qtyToSell;
+                        }
+                        else
+                        {
+                            print("The Selling Item script was not assigned");
+                        }
+
+                    }
+                }
+
+                print("Ready to sell");
+                if(player.inventory.CkeckItemQty(sellingItemName, sellingItemQty))
+                {
+                    player.ApplyLevelProgress(sellingItemQty * sellingItemQty);
+                    player.inventory.RemoveItem(player.inventory.FindItem(sellingItemName), sellingItemQty);
+                    dialogueManager.StartDialogue("You sold " + sellingItemQty + " " + sellingItemName + "s");
+                    print("I have "+sellingItemQty+" "+sellingItemName);
+                }
+                else
+                {
+                    dialogueManager.StartDialogue("You don't have " + sellingItemQty + " " + sellingItemName +"s");
+                }
+            }
+            else
+            {
+                dialogueManager.StartDialogue("Please start conversation");
+            }
+        }
+    }
 }

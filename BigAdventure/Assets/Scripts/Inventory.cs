@@ -61,6 +61,36 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void RemoveItem(Item item, int quantityToRemove)
+    {
+        if (!inventorySlots.ContainsKey(item))
+        {
+            return;
+        }
+
+        int currentQty = inventorySlots[item];
+
+        if (quantityToRemove == currentQty)
+        {
+            inventorySlots.Remove(item);
+            GameObject itemSlot = FindGameObjectByItem(item);
+            if (itemSlot != null)
+            {
+                Destroy(itemSlot);
+            }
+        }
+        else if(quantityToRemove <= currentQty)
+        {
+            inventorySlots[item] -= quantityToRemove;
+        }
+        else
+        {
+            return;
+        }
+
+        ListItems(); 
+    }
+
     public void ListItems()
     {
         foreach (var (item, quantity) in inventorySlots) 
@@ -110,6 +140,19 @@ public class Inventory : MonoBehaviour
         foreach (Item item in inventorySlots.Keys)
         {
             if (item.itemName == check_itemName)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool CkeckItemQty(string check_itemName, int item_qty)
+    {
+        foreach (KeyValuePair<Item, int> pair in inventorySlots)
+        {
+            if (pair.Key.itemName == check_itemName && pair.Value >= item_qty)
             {
                 return true;
             }
