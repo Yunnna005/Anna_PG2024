@@ -19,7 +19,7 @@ public class TeleportVillageController : MonoBehaviour
         PlayerContoller player = collision.gameObject.GetComponent<PlayerContoller>();
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (player.playerLevel >= 4)
+            if (player.playerLevel >= 3)
             {
                 sphereCollider.enabled = false;
                 meshCollider.enabled = true;
