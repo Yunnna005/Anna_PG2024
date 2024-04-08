@@ -27,7 +27,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     float timerLevelUp;
     float LevelUpAnimationTime = 2.65f;
     float PickUPAnimationTime = 1.50f;
-    float playerHealth = 1.0f;
+    internal float playerHealth = 1.0f;
     int playerExpreienceLevel = 0;
     int levelProgress = 0;
     int levelTarget = 100;
@@ -147,7 +147,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
             animator.SetBool("isPickUp", false);
         }
 
-        if (playerHealth == 0)
+        if (playerHealth <= 0)
         {
             gameObject.SetActive(false);
             print("GameOver");
