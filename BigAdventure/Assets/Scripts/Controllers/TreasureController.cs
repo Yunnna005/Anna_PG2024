@@ -30,12 +30,6 @@ public class TreasureController : MonoBehaviour
         effect.Stop();
     }
 
-    private void Update()
-    {
-
-
-    }
-
     public void TreasureOpen(PlayerContoller player)
     {
         text.enabled = true;
@@ -44,7 +38,6 @@ public class TreasureController : MonoBehaviour
 
     public void DestroyTreasureChest()
     {
-        //print("DTC");
         text.enabled = false;
         effect.Play();
         GetReward();
@@ -63,7 +56,6 @@ public class TreasureController : MonoBehaviour
         {
             Destroy(gameObject, 0.5f);
         }
-        //print("I got reward");
     }
 
     public void CantBeOpen()

@@ -7,7 +7,7 @@ public class attackBehaviour : StateMachineBehaviour
 
     Transform player;
     PlayerContoller playerController;
-    float attackRange = 2;
+    float attackRange = 1;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -29,6 +29,11 @@ public class attackBehaviour : StateMachineBehaviour
         if(playerController.playerHealth <= 0)
         {
             animator.SetBool("isIdling", true);
+        }
+        if (player == null)
+        {
+            Debug.LogWarning("Player not found.");
+            return; // Exit the function to prevent further errors
         }
     }
 
