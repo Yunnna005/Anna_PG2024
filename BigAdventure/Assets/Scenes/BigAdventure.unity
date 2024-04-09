@@ -2613,7 +2613,7 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_YAxis:
-    Value: 1
+    Value: 0.5
     m_SpeedMode: 0
     m_MaxSpeed: 1.5
     m_AccelTime: 0.1
@@ -2686,7 +2686,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 241184283}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 192.5, y: 11.128, z: 61.65}
+  m_LocalPosition: {x: 603.87, y: 4.21, z: 266.183}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11295,8 +11295,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 868301677}
-  m_LocalRotation: {x: 0.5953313, y: 0.000000114003754, z: -0.00000008447003, w: 0.8034803}
-  m_LocalPosition: {x: 192.5, y: 11.128, z: 61.65}
+  m_LocalRotation: {x: 0.20460352, y: 0.00000003368476, z: -0.0000000070409727, w: 0.97884494}
+  m_LocalPosition: {x: 603.87, y: 4.21, z: 266.183}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13732,7 +13732,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1108130891}
-  m_LocalRotation: {x: 0.5953313, y: 0.000000057001838, z: -0.000000042234984, w: 0.8034803}
+  m_LocalRotation: {x: 0.31065848, y: 0.000000028327754, z: -0.000000009258345, w: 0.95052165}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -15996,7 +15996,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 2
-  m_FollowOffset: {x: 0, y: 4.14, z: -1.26}
+  m_FollowOffset: {x: 0, y: 2.92, z: -3.99}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0
@@ -16243,6 +16243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skyboxDay: {fileID: 2100000, guid: 4067de1a02072244798361060c5e7325, type: 2}
+  player: {fileID: 432021452}
 --- !u!4 &1278830292
 Transform:
   m_ObjectHideFlags: 0
@@ -17450,7 +17451,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1352347883}
-  m_LocalRotation: {x: 0.5240928, y: -0.01733131, z: 0.0106683355, w: 0.851418}
+  m_LocalRotation: {x: 0.1498531, y: -0.0201217, z: 0.0030503813, w: 0.9884988}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -17504,15 +17505,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7019920669011962644, guid: cc91c8ba8b9a34f4d99e70d721f60b64, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 192.5
+      value: 603.87
       objectReference: {fileID: 0}
     - target: {fileID: 7019920669011962644, guid: cc91c8ba8b9a34f4d99e70d721f60b64, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.988
+      value: 1.29
       objectReference: {fileID: 0}
     - target: {fileID: 7019920669011962644, guid: cc91c8ba8b9a34f4d99e70d721f60b64, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 62.91
+      value: 270.173
       objectReference: {fileID: 0}
     - target: {fileID: 7019920669011962644, guid: cc91c8ba8b9a34f4d99e70d721f60b64, type: 3}
       propertyPath: m_LocalRotation.w
@@ -19316,7 +19317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 2
-  m_FollowOffset: {x: 0, y: 4.14, z: -1.26}
+  m_FollowOffset: {x: 0, y: 2.92, z: -3.99}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0
@@ -19443,7 +19444,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1492026753}
-  m_LocalRotation: {x: 0.5450141, y: 0.000000014426283, z: -0.000000009377714, w: 0.8384269}
+  m_LocalRotation: {x: 0.2046035, y: 0.000000016842385, z: -0.0000000035204872, w: 0.97884494}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -24616,7 +24617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 2
-  m_FollowOffset: {x: 0, y: 4.14, z: -1.26}
+  m_FollowOffset: {x: 0, y: 2.92, z: -3.99}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0
