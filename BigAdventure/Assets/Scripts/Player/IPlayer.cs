@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IPlayer
 {
-    void ApplyDamage(float value);
+    IEnumerator ApplyDamage(float value);
     void ApplyHeal(float value);
     void ApplyLevelProgress(int value);
 

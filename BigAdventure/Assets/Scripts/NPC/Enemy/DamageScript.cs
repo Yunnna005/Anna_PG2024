@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DamageScript : MonoBehaviour
 {
-    float damageCount = 0.1f;
+    float damageCount = 0.05f;
     float timer;
     PlayerContoller player;
 
@@ -17,7 +17,7 @@ public class DamageScript : MonoBehaviour
     {
         if(timer <= 0)
         {
-            player.ApplyDamage(damageCount);
+            StartCoroutine(player.ApplyDamage(damageCount));
             timer = 2;
         }
 
@@ -28,6 +28,16 @@ public class DamageScript : MonoBehaviour
         print("I trigger with the player");
         player = other.gameObject.GetComponent<PlayerContoller>();
         timer = 0;
-        ApplyDamage();
+        if(player != null && player.isDefending == false)
+        {
+            ApplyDamage();
+        }else if (player != null && player.isDefending)
+        {
+            print("The player is defending cannot get damage");
+        }
+        else
+        {
+            print("Cannot find PlayerController");
+        }
     }
 }

@@ -26,3 +26,4 @@
 04/04/24 Finished the design of the map. Finished all teleports. A little bit fixed miniGame basketball game script. Start working on NPCs. Made 2 scripts for NPCs: NPC_Controller and DialogueManager. Added fog.
 05/04/24 Added 4 NPCs with completed reusable scripts. Add SellItem ScreptableObject. Made some prephabs. Added NPC animals with scripts. Changed locations of sellers to castel city.
 08/04/24 Start working on Enemies.
+09/04/24 Enemy prefab is done. Added damage (redOverlay) image made in the adobe Photoshop by myself. Still have an issue with rolling camera around player.

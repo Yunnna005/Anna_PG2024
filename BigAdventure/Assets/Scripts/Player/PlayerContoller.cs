@@ -59,6 +59,11 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     Vector3 previousPosition;
 
     NPC_Controller npc_Controller;
+
+    public GameObject redOverlay;
+    public bool isDefending = false;
+    bool isAttackingEnemy = false;
+
     float PlayerHealth {  get { return playerHealth; }
         set
         {
@@ -198,6 +203,10 @@ public class PlayerContoller : MonoBehaviour, IPlayer
         }
         animator.SetBool("isAttacking", Input.GetKeyDown(KeyCode.Mouse0));
 
+        isDefending = Input.GetKey(KeyCode.Mouse1);
+        animator.SetBool("isDefending", isDefending);
+
+
         if (isPlayingMiniGame)
         {
             if (basketball_MiniGame)
@@ -310,6 +319,22 @@ public class PlayerContoller : MonoBehaviour, IPlayer
             inventory.AddItem(pickupItem);
             Destroy(other.gameObject);
         }
+
+        EnemyController enemy = other.GetComponent<EnemyController>();
+        if(enemy != null)
+        {
+            isAttackingEnemy = true;
+            enemy.StartFighting(true);
+
+        }
+        else
+        {
+            return;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        redOverlay.SetActive(false);
     }
     internal void DisArm()
     {
@@ -322,12 +347,6 @@ public class PlayerContoller : MonoBehaviour, IPlayer
         print("Activating");
         my_shield.gameObject.SetActive(true);
         my_sword.gameObject.SetActive(true);
-    }
-    void startPickUP()
-    {
-        animator.SetBool("isPickUp", true);
-        timer = PickUPAnimationTime;
-
     }
 
     public int PlayerLevelSetandCheck(int experienceLevel)
@@ -368,9 +387,14 @@ public class PlayerContoller : MonoBehaviour, IPlayer
         }
     }
 
-    public void ApplyDamage(float value)
+    public IEnumerator ApplyDamage(float value)
     {
         PlayerHealth -= value;
+        redOverlay.SetActive(true);
+
+        yield return new WaitForSeconds(.5f);
+        redOverlay.SetActive(false);
+        
     }
 
     public void ApplyHeal(float value)
