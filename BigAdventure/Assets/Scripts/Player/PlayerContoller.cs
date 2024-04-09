@@ -298,7 +298,8 @@ public class PlayerContoller : MonoBehaviour, IPlayer
 
             if (pickupItem.damage)
             {
-                ApplyDamage(pickupItem.itemValue);
+                StartCoroutine(ApplyDamage(pickupItem.itemValue));
+                
             }
             else if (pickupItem.heal)
             {
@@ -394,7 +395,6 @@ public class PlayerContoller : MonoBehaviour, IPlayer
 
         yield return new WaitForSeconds(.5f);
         redOverlay.SetActive(false);
-        
     }
 
     public void ApplyHeal(float value)

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 3
   itemName: Mushroom
   description: The mushroom decrise player health
-  itemValue: 0.01
+  itemValue: 0.1
   damage: 1
   heal: 0
   progress: 0
