@@ -21,6 +21,10 @@ public class chaseBehaviour : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateinfo, int layerindex)
     {
+        if (player == null || agent == null)
+        {
+            return;
+        }
         agent.SetDestination(player.transform.position);
         float distance = Vector3.Distance(animator.transform.position, player.transform.position);
 
@@ -33,11 +37,7 @@ public class chaseBehaviour : StateMachineBehaviour
         {
             animator.SetBool("isChasing", false);
         }
-        if (player == null)
-        {
-            Debug.LogWarning("Player not found.");
-            return; // Exit the function to prevent further errors
-        }
+
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
