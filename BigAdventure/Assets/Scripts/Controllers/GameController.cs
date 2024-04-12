@@ -16,6 +16,8 @@ public class GameController : MonoBehaviour
     public GameObject fishPrehab;
     public GameObject heartPrehab;
     public GameObject enemyPrehab;
+    public GameObject applePrehab;
+    public GameObject rockPrehab;
 
 
     PlayerContoller playerController;
@@ -35,6 +37,8 @@ public class GameController : MonoBehaviour
     List<Transform> heartPoints4 = new List<Transform>(); 
     List<Transform> enemyPoints = new List<Transform>(); 
     List<Transform> enemyPoints4 = new List<Transform>();
+    List<Transform> applePoints = new List<Transform>();
+    List<Transform> rockPoints = new List<Transform>();
 
     private void Start()
     {
@@ -43,6 +47,13 @@ public class GameController : MonoBehaviour
         RenderSettings.skybox = skyboxDay;
         FindAllPoints();
         InstantiateKeyPoints();
+    }
+    private void Update()
+    {
+        if(playerController.playerLevel == 3)
+        {
+            InstantiateKeyPoints();
+        }
     }
     public void RestartGame()
     {
@@ -102,6 +113,12 @@ public class GameController : MonoBehaviour
                 case "EnemyPoints4":
                     enemyPoints4.Add(currentObject);
                     break;
+                case "applePoints":
+                    applePoints.Add(currentObject);
+                    break;
+                case "rockPoints":
+                    rockPoints.Add(currentObject);
+                    break;
             }
 
             i++;
@@ -119,6 +136,8 @@ public class GameController : MonoBehaviour
         print("HeartPoints4   " + heartPoints4.Count);
         print("EnemyPoints   " + enemyPoints.Count);
         print("EnemyPoints4   " + enemyPoints4.Count);
+        print("ApplePoints   " + applePoints.Count);
+        print("RockPoints   " + rockPoints.Count);
     }
 
     public void InstantiateKeyPoints()
@@ -148,6 +167,14 @@ public class GameController : MonoBehaviour
             foreach (Transform keyPoint in enemyPoints)
             {
                 Instantiate(enemyPrehab, keyPoint.position, keyPoint.rotation);
+            }            
+            foreach (Transform keyPoint in applePoints)
+            {
+                Instantiate(applePrehab, keyPoint.position, keyPoint.rotation);
+            }            
+            foreach (Transform keyPoint in rockPoints)
+            {
+                Instantiate(rockPrehab, keyPoint.position, keyPoint.rotation);
             }
         }
         if (playerController.playerLevel == 3)
