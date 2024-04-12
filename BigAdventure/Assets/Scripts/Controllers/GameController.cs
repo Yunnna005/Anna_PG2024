@@ -34,7 +34,8 @@ public class GameController : MonoBehaviour
     List<Transform> heartPoints = new List<Transform>(); 
     List<Transform> heartPoints4 = new List<Transform>(); 
     List<Transform> enemyPoints = new List<Transform>(); 
-    List<Transform> enemyPoints4 = new List<Transform>(); 
+    List<Transform> enemyPoints4 = new List<Transform>();
+
     private void Start()
     {
         player.transform.position = startPosition;
@@ -50,7 +51,7 @@ public class GameController : MonoBehaviour
 
     public void BackToStartScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);  
     }
 
     public void FindAllPoints()

@@ -19,7 +19,7 @@ public class TreasureController : MonoBehaviour
     float distance;
 
     public float targetTime = 1.0f;
-
+    PlayerContoller player;
 
     // Start is called before the first frame update
     void Start()
@@ -48,7 +48,7 @@ public class TreasureController : MonoBehaviour
         while (maxReward != 3)
         {
             float randomNum = UnityEngine.Random.Range(-.5f, 0.5f);
-            spawnPosition = new Vector3(transform.position.x + randomNum, position_y_diamond, transform.position.z + randomNum);
+            spawnPosition = new Vector3(transform.position.x + randomNum, transform.position.y, transform.position.z + randomNum);
             Instantiate(diamondPrefab, spawnPosition, Quaternion.Euler(-90f, 0f, 0f));
             maxReward++;
         }
