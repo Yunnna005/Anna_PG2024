@@ -74,11 +74,11 @@ public class Basketball_miniGame : MonoBehaviour, IPlayGame
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
-        {        
+        {
 
             thePlayer.PlayMode(true);
 
-            if(isCurrently == GameState.Finish)
+            if (isCurrently == GameState.Finish)
             {
                 canvas.SetActive(true);
             }
@@ -93,7 +93,8 @@ public class Basketball_miniGame : MonoBehaviour, IPlayGame
         }
     }
 
-    private void OnCollisionExit(Collision collision) {
+    private void OnCollisionExit(Collision collision)
+    {
         canvas.SetActive(false);
     }
 
@@ -122,14 +123,14 @@ public class Basketball_miniGame : MonoBehaviour, IPlayGame
         Vector3 spawnPosition = playerPosition + playerForward + Vector3.up;
 
         newBall = Instantiate(ball_prefab, spawnPosition, Quaternion.identity);
-      
+
         thePlayer.YourBallIs(newBall.GetComponentInChildren<ballController>());
 
     }
 
     public void PlayingGame(PlayerContoller theNewPlayer)
     {
-       if (isCurrently == GameState.inActive)
+        if (isCurrently == GameState.inActive)
         {
             thePlayer = theNewPlayer;
             isCurrently = GameState.startingMessage;
@@ -156,18 +157,18 @@ public class Basketball_miniGame : MonoBehaviour, IPlayGame
         if (max_Reward == maxReward)
         {
             EndGame();
-            
+
         }
     }
 
     internal void ClearMessage()
     {
-          canvas.SetActive(false);
+        canvas.SetActive(false);
     }
 
     public void ActiveCanvas()
     {
-        if(canvasTimer<=0) 
+        if (canvasTimer <= 0)
         {
             canvas.SetActive(false);
             isCurrently = GameState.Finish;

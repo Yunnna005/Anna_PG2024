@@ -206,7 +206,6 @@ public class PlayerContoller : MonoBehaviour, IPlayer
         isDefending = Input.GetKey(KeyCode.Mouse1);
         animator.SetBool("isDefending", isDefending);
 
-
         if (isPlayingMiniGame)
         {
             if (basketball_MiniGame)
@@ -225,7 +224,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
             basketball_MiniGame = null;
         }
 
-        if(isStartCollecttreasure)
+        if (isStartCollecttreasure)
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
@@ -244,9 +243,7 @@ public class PlayerContoller : MonoBehaviour, IPlayer
 
     private void OnCollisionEnter(Collision collision)
     {
-
         TreasureController chestInFrontOfMe = collision.gameObject.GetComponent<TreasureController>();
-
 
         if (chestInFrontOfMe)
         {
