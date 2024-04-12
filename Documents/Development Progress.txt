@@ -27,4 +27,5 @@
 05/04/24 Added 4 NPCs with completed reusable scripts. Add SellItem ScreptableObject. Made some prephabs. Added NPC animals with scripts. Changed locations of sellers to castel city.
 08/04/24 Start working on Enemies.
 09/04/24 Enemy prefab is done. Added damage (redOverlay) image made in the adobe Photoshop by myself. Still have an issue with rolling camera around player. Added Start Scene with functionality. Added Item and Enemies Spawner.
+12/09/24 Add code to finish game to the flower. Start testing the gameplay. I need to add apples and rocks on the map and test the basketball mini games.
 

@@ -24,6 +24,7 @@ TagManager:
   - NPC
   - Points
   - Weapon
+  - Flower
   layers:
   - Default
   - TransparentFX

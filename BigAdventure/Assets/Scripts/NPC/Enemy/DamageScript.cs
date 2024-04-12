@@ -18,7 +18,7 @@ public class DamageScript : MonoBehaviour
         if(timer <= 0)
         {
             StartCoroutine(player.ApplyDamage(damageCount));
-            timer = 2;
+            timer = 3.5f;
         }
 
     }

@@ -281,6 +281,8 @@ public class PlayerContoller : MonoBehaviour, IPlayer
                 npc_Controller.StartDialogue();
             }
         }
+
+        
     }
 
     private void OnCollisionExit(Collision collision)
