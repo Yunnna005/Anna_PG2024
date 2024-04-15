@@ -21,24 +21,10 @@ public class GameController : MonoBehaviour
 
 
     PlayerContoller playerController;
-    Transform[] SpawnPoints;
 
     Vector3 startPosition = new Vector3(603.87f, 1.29f, 264.9f);
 
-    List<Transform> diamondPoints123 = new List<Transform>();
-    List<Transform> diamondPoints4 = new List<Transform>(); 
-    List<Transform> treasureChestPoints = new List<Transform>(); 
-    List<Transform> treasureChestPoints4 = new List<Transform>(); 
-    List<Transform> keyPoints = new List<Transform>(); 
-    List<Transform> keyPoints4 = new List<Transform>(); 
-    List<Transform> mushroomPoints = new List<Transform>(); 
-    List<Transform> fishPoints = new List<Transform>(); 
-    List<Transform> heartPoints = new List<Transform>(); 
-    List<Transform> heartPoints4 = new List<Transform>(); 
-    List<Transform> enemyPoints = new List<Transform>(); 
-    List<Transform> enemyPoints4 = new List<Transform>();
-    List<Transform> applePoints = new List<Transform>();
-    List<Transform> rockPoints = new List<Transform>();
+    Dictionary<string, List<Transform>> spawnPoints = new Dictionary<string, List<Transform>>();
 
     private void Start()
     {
@@ -65,145 +51,81 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);  
     }
 
-    public void FindAllPoints()
+    private void FindAllPoints()
     {
-        int i = 0;
-        SpawnPoints = GetComponentsInChildren<Transform>();
+        Transform[] allTransforms = GetComponentsInChildren<Transform>();
 
-        while (i!= SpawnPoints.Length)
+        foreach (Transform point in allTransforms)
         {
-            Transform currentObject = SpawnPoints[i];
-
-            // Check if the object's name matches the desired name pattern
-            switch (currentObject.name)
+            switch (point.name)
             {
                 case "DiamondPoints0_1_2":
-                    diamondPoints123.Add(currentObject);
-                    break;
                 case "DiamondPoints4":
-                    diamondPoints4.Add(currentObject);
-                    break;
                 case "TreasureChestPoints":
-                    treasureChestPoints.Add(currentObject);
-                    break;
                 case "TreasureChestPoints4":
-                    treasureChestPoints4.Add(currentObject);
-                    break;
                 case "KeysPoints":
-                    keyPoints.Add(currentObject);
-                    break;
                 case "KeysPoints4":
-                    keyPoints4.Add(currentObject);
-                    break;
                 case "MushroomPoints":
-                    mushroomPoints.Add(currentObject);
-                    break;
                 case "FishPoints":
-                    fishPoints.Add(currentObject);
-                    break;
                 case "HeartPoints":
-                    heartPoints.Add(currentObject);
-                    break;
                 case "HeartPoints4":
-                    heartPoints4.Add(currentObject);
-                    break;
                 case "EnemyPoints":
-                    enemyPoints.Add(currentObject);
-                    break;
                 case "EnemyPoints4":
-                    enemyPoints4.Add(currentObject);
-                    break;
                 case "applePoints":
-                    applePoints.Add(currentObject);
-                    break;
                 case "rockPoints":
-                    rockPoints.Add(currentObject);
-                    break;
+                
+                    
+               if (!spawnPoints.ContainsKey(point.name))
+               {
+                  spawnPoints.Add(point.name, new List<Transform>());
+               }
+               spawnPoints[point.name].Add(point);
+               break;
             }
-
-            i++;
         }
 
-        print("DiamondPoints0_1_2    "+ diamondPoints123.Count);
-        print("DiamondPoints4    " + diamondPoints4.Count);
-        print("treasureChestPoints   " + treasureChestPoints.Count);
-        print("treasureChestPoints4   " + treasureChestPoints4.Count);
-        print("KeyPoints   " + keyPoints.Count);
-        print("KeyPoints4   " + keyPoints4.Count);
-        print("MushroomPoints   " + mushroomPoints.Count);
-        print("FishPoints   " + fishPoints.Count);
-        print("HeartPoints   " +    heartPoints.Count);
-        print("HeartPoints4   " + heartPoints4.Count);
-        print("EnemyPoints   " + enemyPoints.Count);
-        print("EnemyPoints4   " + enemyPoints4.Count);
-        print("ApplePoints   " + applePoints.Count);
-        print("RockPoints   " + rockPoints.Count);
+        foreach (var entry in spawnPoints)
+        {
+            Debug.Log(entry.Key + " Count: " + entry.Value.Count);
+        }
     }
 
-    public void InstantiateKeyPoints()
+    private void InstantiateObjectsFromPoints(List<Transform> points, GameObject prefab)
     {
-        if(playerController.playerLevel < 3)
+        foreach (Transform spawnPoint in points)
         {
-            foreach (Transform keyPoint in diamondPoints123)
+            if(spawnPoint.name == "DiamondPoints0_1_2" || spawnPoint.name == "DiamondPoints4" || spawnPoint.name == "HeartPoints"|| spawnPoint.name == "HeartPoints4")
             {
-                Instantiate(diamondPrehab, keyPoint.position, Quaternion.Euler(-90f, 0f, 0f));
+                Instantiate(prefab, spawnPoint.position, Quaternion.Euler(-90, 0, 0));
             }
-            foreach (Transform keyPoint in treasureChestPoints)
+            else
             {
-                Instantiate(treasureChestPrehab, keyPoint.position, keyPoint.rotation);
-            }
-            foreach (Transform keyPoint in keyPoints)
-            {
-                Instantiate(keyPrehab, keyPoint.position, keyPoint.rotation);
-            }
-            foreach (Transform keyPoint in mushroomPoints)
-            {
-                Instantiate(mushroomPrehab, keyPoint.position, keyPoint.rotation);
-            }
-            foreach (Transform keyPoint in heartPoints)
-            {
-                Instantiate(heartPrehab, keyPoint.position, Quaternion.Euler(-90f, 0f, 0f));
-            }
-            foreach (Transform keyPoint in enemyPoints)
-            {
-                Instantiate(enemyPrehab, keyPoint.position, keyPoint.rotation);
-            }            
-            foreach (Transform keyPoint in applePoints)
-            {
-                Instantiate(applePrehab, keyPoint.position, keyPoint.rotation);
-            }            
-            foreach (Transform keyPoint in rockPoints)
-            {
-                Instantiate(rockPrehab, keyPoint.position, keyPoint.rotation);
+                Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
             }
         }
-        if (playerController.playerLevel == 3)
-        {
-            foreach (Transform keyPoint in diamondPoints4)
-            {
-                Instantiate(diamondPrehab, keyPoint.position, Quaternion.Euler(-90f, 0f, 0f));
-            }
-            foreach (Transform keyPoint in treasureChestPoints4)
-            {
-                Instantiate(treasureChestPrehab, keyPoint.position, keyPoint.rotation);
-            }
-            foreach (Transform keyPoint in keyPoints4)
-            {
-                Instantiate(keyPrehab, keyPoint.position, keyPoint.rotation);
-            }
-            foreach (Transform keyPoint in fishPoints)
-            {
-                Instantiate(fishPrehab, keyPoint.position, keyPoint.rotation);
-            }
-            foreach (Transform keyPoint in heartPoints4)
-            {
-                Instantiate(heartPrehab, keyPoint.position, Quaternion.Euler(-90f, 0f, 0f));
-            }
-            foreach (Transform keyPoint in enemyPoints4)
-            {
-                Instantiate(enemyPrehab, keyPoint.position, keyPoint.rotation);
-            }
-        }
+    }
 
+    private void InstantiateKeyPoints()
+    {
+        if (playerController.playerLevel < 3)
+        {
+            InstantiateObjectsFromPoints(spawnPoints["DiamondPoints0_1_2"], diamondPrehab);
+            InstantiateObjectsFromPoints(spawnPoints["TreasureChestPoints"], treasureChestPrehab);
+            InstantiateObjectsFromPoints(spawnPoints["KeysPoints"], keyPrehab);
+            InstantiateObjectsFromPoints(spawnPoints["MushroomPoints"], mushroomPrehab);
+            InstantiateObjectsFromPoints(spawnPoints["HeartPoints"], heartPrehab);
+            InstantiateObjectsFromPoints(spawnPoints["EnemyPoints"], enemyPrehab);
+            InstantiateObjectsFromPoints(spawnPoints["applePoints"], applePrehab);
+            InstantiateObjectsFromPoints(spawnPoints["rockPoints"], rockPrehab);
+        }
+        else if (playerController.playerLevel == 3)
+        {
+            InstantiateObjectsFromPoints(spawnPoints["DiamondPoints4"], diamondPrehab);
+            InstantiateObjectsFromPoints(spawnPoints["TreasureChestPoints4"], treasureChestPrehab);
+            InstantiateObjectsFromPoints(spawnPoints["KeysPoints4"], keyPrehab);
+            InstantiateObjectsFromPoints(spawnPoints["FishPoints"], fishPrehab);
+            InstantiateObjectsFromPoints(spawnPoints["HeartPoints4"], heartPrehab);
+            InstantiateObjectsFromPoints(spawnPoints["EnemyPoints4"], enemyPrehab);
+        }
     }
 }

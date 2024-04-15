@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class attackBehaviour : StateMachineBehaviour
 {
-
     Transform player;
     PlayerContoller playerController;
     float attackRange = 1;
@@ -35,11 +34,5 @@ public class attackBehaviour : StateMachineBehaviour
             Debug.LogWarning("Player not found.");
             return; // Exit the function to prevent further errors
         }
-    }
-
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateinfo, int layerindex)
-    {
-
     }
 }
