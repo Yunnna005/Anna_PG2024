@@ -278,8 +278,6 @@ public class PlayerContoller : MonoBehaviour, IPlayer
                 npc_Controller.StartDialogue();
             }
         }
-
-        
     }
 
     private void OnCollisionExit(Collision collision)
@@ -356,17 +354,16 @@ public class PlayerContoller : MonoBehaviour, IPlayer
         {
             case 0:
                 return 100;
-              
             case 1:
                 return 250;
-               
             case 2:
                 return 400;
-  
             case 3:
                 return 600;
-              
-;
+            case 4:
+                return 500;
+            case 5:
+                return 600;
         default:
                 return 1000;
         }
@@ -377,10 +374,16 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     {
         switch (experienceLevel)
         {
-            case 250:
+            case 100:
                 return 1;
-            case 400:
+            case 250:
                 return 2;
+            case 400:
+                return 3;
+            case 500:
+                return 4;
+            case 600:
+                return 5;
 
         default:
              return 5;
