@@ -12,6 +12,10 @@ public class attackBehaviour : StateMachineBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         playerController = player.gameObject.GetComponent<PlayerContoller>();
+        if(player == null || playerController == null)
+        {
+            return;
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
