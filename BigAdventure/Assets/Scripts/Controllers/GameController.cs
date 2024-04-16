@@ -26,6 +26,8 @@ public class GameController : MonoBehaviour
 
     Dictionary<string, List<Transform>> spawnPoints = new Dictionary<string, List<Transform>>();
 
+    bool isInstantiated = false;
+
     private void Start()
     {
         player.transform.position = startPosition;
@@ -36,9 +38,12 @@ public class GameController : MonoBehaviour
     }
     private void Update()
     {
-        if(playerController.playerLevel == 3)
+        if(playerController.playerLevel >= 4)
         {
-            InstantiateKeyPoints();
+            if (isInstantiated == false)
+            {
+                InstantiateKeyPoints();
+            }
         }
     }
     public void RestartGame()
@@ -107,7 +112,7 @@ public class GameController : MonoBehaviour
 
     private void InstantiateKeyPoints()
     {
-        if (playerController.playerLevel < 3)
+        if (playerController.playerLevel < 4)
         {
             InstantiateObjectsFromPoints(spawnPoints["DiamondPoints0_1_2"], diamondPrehab);
             InstantiateObjectsFromPoints(spawnPoints["TreasureChestPoints"], treasureChestPrehab);
@@ -118,7 +123,8 @@ public class GameController : MonoBehaviour
             InstantiateObjectsFromPoints(spawnPoints["applePoints"], applePrehab);
             InstantiateObjectsFromPoints(spawnPoints["rockPoints"], rockPrehab);
         }
-        else if (playerController.playerLevel == 4)
+
+       if (playerController.playerLevel >= 4)
         {
             InstantiateObjectsFromPoints(spawnPoints["DiamondPoints4"], diamondPrehab);
             InstantiateObjectsFromPoints(spawnPoints["TreasureChestPoints4"], treasureChestPrehab);
@@ -126,6 +132,8 @@ public class GameController : MonoBehaviour
             InstantiateObjectsFromPoints(spawnPoints["FishPoints"], fishPrehab);
             InstantiateObjectsFromPoints(spawnPoints["HeartPoints4"], heartPrehab);
             InstantiateObjectsFromPoints(spawnPoints["EnemyPoints4"], enemyPrehab);
+
+            isInstantiated = true;
         }
     }
 }
