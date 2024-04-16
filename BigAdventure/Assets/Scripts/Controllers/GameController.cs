@@ -118,7 +118,7 @@ public class GameController : MonoBehaviour
             InstantiateObjectsFromPoints(spawnPoints["applePoints"], applePrehab);
             InstantiateObjectsFromPoints(spawnPoints["rockPoints"], rockPrehab);
         }
-        else if (playerController.playerLevel == 3)
+        else if (playerController.playerLevel == 4)
         {
             InstantiateObjectsFromPoints(spawnPoints["DiamondPoints4"], diamondPrehab);
             InstantiateObjectsFromPoints(spawnPoints["TreasureChestPoints4"], treasureChestPrehab);
