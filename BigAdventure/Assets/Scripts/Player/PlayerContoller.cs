@@ -350,24 +350,24 @@ public class PlayerContoller : MonoBehaviour, IPlayer
     public int PlayerLevelSetandCheck(int experienceLevel)
     {
 
-        switch(experienceLevel)
+        switch (experienceLevel)
         {
             case 0:
                 return 100;
             case 1:
-                return 250;
+                return 150;
             case 2:
-                return 400;
+                return 200;
             case 3:
-                return 600;
+                return 250;
             case 4:
-                return 500;
+                return 300;
             case 5:
-                return 600;
-        default:
-                return 1000;
+                return 350; 
+            default:
+                return 350;
         }
-  
+
     }
 
     public int PlayerLevelSetLevel(int experienceLevel)
@@ -375,18 +375,19 @@ public class PlayerContoller : MonoBehaviour, IPlayer
         switch (experienceLevel)
         {
             case 100:
+                return 0;
+            case 150:
                 return 1;
-            case 250:
+            case 200:
                 return 2;
-            case 400:
+            case 250:
                 return 3;
-            case 500:
+            case 300:
                 return 4;
-            case 600:
+            case 350:
+                return 5; 
+            default:
                 return 5;
-
-        default:
-             return 5;
         }
     }
 
