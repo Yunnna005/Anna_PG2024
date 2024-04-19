@@ -361,11 +361,11 @@ public class PlayerContoller : MonoBehaviour, IPlayer
             case 3:
                 return 250;
             case 4:
-                return 300;
+                return 600;
             case 5:
-                return 550; 
+                return 650; 
             default:
-                return 550;
+                return 650;
         }
 
     }
@@ -382,9 +382,9 @@ public class PlayerContoller : MonoBehaviour, IPlayer
                 return 2;
             case 250:
                 return 3;
-            case 300:
+            case 600:
                 return 4;
-            case 550:
+            case 650:
                 return 5; 
             default:
                 return 5;
