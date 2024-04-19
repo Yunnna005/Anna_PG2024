@@ -30,3 +30,4 @@
 12/04/24 Add code to finish game to the flower. Start testing the gameplay. Added apples and rocks on the map and fixed camera. Start working on the document.
 15/04/24 Fixed teleport scripts, needed to fix level
 16/04/24 Document is done, level is fixed. The game need to be tested. fixed some isues but something happend with level bar.The game is tasted once(min time on playing 15 mins)
+19/04/24 The game tested. Added fog. Changed player level.
