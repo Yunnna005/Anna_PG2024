@@ -21,6 +21,8 @@ public class TreasureController : MonoBehaviour
     public float targetTime = 1.0f;
     PlayerContoller player;
 
+    int rewardTarget = 3;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,14 +47,14 @@ public class TreasureController : MonoBehaviour
 
     public void GetReward()
     {
-        while (maxReward != 3)
+        while (maxReward != rewardTarget)
         {
             float randomNum = UnityEngine.Random.Range(-.5f, 0.5f);
             spawnPosition = new Vector3(transform.position.x + randomNum, transform.position.y, transform.position.z + randomNum);
             Instantiate(diamondPrefab, spawnPosition, Quaternion.Euler(-90f, 0f, 0f));
             maxReward++;
         }
-        if (maxReward == 3)
+        if (maxReward == rewardTarget)
         {
             Destroy(gameObject, 0.5f);
         }

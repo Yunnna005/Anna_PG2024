@@ -28,6 +28,8 @@ public class GameController : MonoBehaviour
 
     bool isInstantiated = false;
 
+    int targetPlayerLevel = 4;
+
     private void Start()
     {
         player.transform.position = startPosition;
@@ -38,7 +40,7 @@ public class GameController : MonoBehaviour
     }
     private void Update()
     {
-        if(playerController.playerLevel >= 4)
+        if(playerController.playerLevel >= targetPlayerLevel)
         {
             if (isInstantiated == false)
             {
@@ -112,7 +114,7 @@ public class GameController : MonoBehaviour
 
     private void InstantiateKeyPoints()
     {
-        if (playerController.playerLevel < 4)
+        if (playerController.playerLevel < targetPlayerLevel)
         {
             InstantiateObjectsFromPoints(spawnPoints["DiamondPoints0_1_2"], diamondPrehab);
             InstantiateObjectsFromPoints(spawnPoints["TreasureChestPoints"], treasureChestPrehab);
@@ -124,7 +126,7 @@ public class GameController : MonoBehaviour
             InstantiateObjectsFromPoints(spawnPoints["rockPoints"], rockPrehab);
         }
 
-       if (playerController.playerLevel >= 4)
+       if (playerController.playerLevel >= targetPlayerLevel)
         {
             InstantiateObjectsFromPoints(spawnPoints["DiamondPoints4"], diamondPrehab);
             InstantiateObjectsFromPoints(spawnPoints["TreasureChestPoints4"], treasureChestPrehab);

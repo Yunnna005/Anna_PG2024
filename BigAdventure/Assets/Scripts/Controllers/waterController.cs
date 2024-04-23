@@ -13,8 +13,6 @@ public class waterController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             player.transform.position = spawnPosition;
-        }
-
-        
+        }  
     }
 }

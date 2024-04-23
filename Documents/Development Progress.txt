@@ -31,3 +31,4 @@
 15/04/24 Fixed teleport scripts, needed to fix level
 16/04/24 Document is done, level is fixed. The game need to be tested. fixed some isues but something happend with level bar.The game is tasted once(min time on playing 15 mins)
 19/04/24 The game tested. Added fog. Changed player level.
+23/04/24 Presentation. The project is done.

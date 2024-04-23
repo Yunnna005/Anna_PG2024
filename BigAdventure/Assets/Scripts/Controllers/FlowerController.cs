@@ -7,13 +7,14 @@ using UnityEngine.UI;
 public class FlowerController : MonoBehaviour
 {
     float timerTime;
+    float targetTime = 0;
 
     private void Update()
     {
-        if (timerTime > 0) 
+        if (timerTime > targetTime) 
         {
             timerTime -= Time.deltaTime;
-            if (timerTime <= 0) 
+            if (timerTime <= targetTime) 
             {
                 GameController gameController = FindObjectOfType<GameController>(); 
                 if (gameController != null)
